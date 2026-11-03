@@ -1,38 +1,36 @@
-<p align="center">
-  <img src="docs/mark.svg" width="72" height="72" alt="FreeLang">
-</p>
+# FreeLang
 
-<h1 align="center">FreeLang</h1>
-
-<p align="center"><strong>사람이 읽고, 모델이 쓰는 Lisp.</strong></p>
-
-<p align="center">
-  <a href="https://g-freelang.akl.kr/">Homepage</a> ·
-  <a href="https://kimjindol2025.github.io/freelang-ai/">Pages</a> ·
-  <a href="examples">Examples</a> ·
-  <a href="https://github.com/kimjindol2025/freelang-v11">Compiler</a>
-</p>
+Lisp. Native compiler. A language small enough for a model to write, and real enough to compile itself.
 
 ```freelang
-(defn greet [name]
-  (str "Hello, " name "!"))
-
-(println (greet "FreeLang"))
+(println "Hello from FL!")
+(defn factorial [n]
+  (if (<= n 1) 1 (* n (factorial (- n 1)))))
 ```
 
-## Why FreeLang
+## What it is
 
-**작다.** 문법이 한 화면에 담깁니다. 모델이 키워드를 잃어버리지 않습니다.
+**Lisp.** S-expressions. Code is data.
 
-**코드가 데이터.** Lisp이라서 생성·검사·변환이 같은 모양입니다.
+**Native compiler.** v11 is node-free on the execution path. Stage 2 = 3 = 4 fixpoint. Tests 41/41, audits 44/44. Old bootstrap/npm lives in `legacy/`.
 
-**실제로 돈다.** 함수, 컬렉션, HTTP, DB. 컴파일러는 [freelang-v11](https://github.com/kimjindol2025/freelang-v11)에 있습니다.
+**For models.** No silent coercion. Pure code vs I/O. One naming rule (kebab-case). Same input, same output.
 
-## Get started
+## What it does
 
-1. [hello.fl](examples/hello.fl)
-2. [factorial.fl](examples/factorial.fl)
-3. [collections.fl](examples/collections.fl)
-4. [Getting started](docs/getting-started.md)
+Strings, regex, files, time, tests, HTTP, DB. HTTP is v0.1. **No HTTPS.**
+Apps with HTTP or DB run through `scripts/fl-cli.js`, not `bin/fl`.
+Native runtime does not yet provide `fl-repl` or `fl-serve`.
 
-이 저장소는 언어의 앞문입니다. `src/`, `runtime/`, `tests/`는 여기 없습니다.
+## Start
+
+```bash
+git clone https://github.com/kimjindol2025/freelang-v11.git
+cd freelang-v11
+node scripts/fl-cli.js run examples/hello.fl
+```
+
+- Homepage: https://g-freelang.akl.kr/
+- Examples: [hello](examples/hello.fl) · [factorial](examples/factorial.fl) · [collections](examples/collections.fl)
+- Guide: [docs/getting-started.md](docs/getting-started.md)
+- Compiler: https://github.com/kimjindol2025/freelang-v11

@@ -1,30 +1,32 @@
 # Getting started
 
-This repository is the public face of FreeLang.
-The compiler lives in [freelang-v11](https://github.com/kimjindol2025/freelang-v11).
+FreeLang is a Lisp. The compiler is native. This repo is the public front door.
 
-## 1. Read the language
+## 1. Read three files
 
-Start with three files. That is the whole intro.
+- [examples/hello.fl](../examples/hello.fl)
+- [examples/factorial.fl](../examples/factorial.fl)
+- [examples/collections.fl](../examples/collections.fl)
 
-- [examples/hello.fl](../examples/hello.fl) — print and arithmetic
-- [examples/factorial.fl](../examples/factorial.fl) — a recursive function
-- [examples/collections.fl](../examples/collections.fl) — vectors and maps
+## 2. Run
 
-## 2. Syntax
+Application run path (HTTP/DB included):
 
-Code is lists. Vectors use `[]`. Maps use `{}`.
-
-```freelang
-(println "Hello from FL!")
-(+ 1 2 3)
-(defn square [n] (* n n))
-[1 2 3]
-{"name" "Kim"}
+```bash
+git clone https://github.com/kimjindol2025/freelang-v11.git
+cd freelang-v11
+node scripts/fl-cli.js run examples/hello.fl
 ```
 
-## 3. Compiler
+`bin/fl` is the native compiler. It is not the app runner.
+`fl-repl` and `fl-serve` are not on the native runtime yet.
 
-Clone the development repo when you want to run or build:
+## 3. Limits to know
+
+- HTTP v0.1, no HTTPS
+- Old `node bootstrap.js` / npm flow is `legacy/`
+- Tests 41/41, audits 44/44, stage 2 = 3 = 4 fixpoint
+
+## 4. Compiler
 
 https://github.com/kimjindol2025/freelang-v11
