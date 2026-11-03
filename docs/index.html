@@ -4,76 +4,184 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FreeLang</title>
-<meta name="description" content="Lisp 문법. 네이티브 컴파일러. AI가 생성하고 사람이 읽는 언어.">
+<meta name="description" content="사람이 읽고, 모델이 쓰는 Lisp. 네이티브 컴파일러와 런타임.">
 <link rel="icon" href="mark.svg">
 <style>
-  body { margin: 0; color: #111; background: #faf8f4; font-family: "Apple SD Gothic Neo", "Noto Sans KR", ui-sans-serif, system-ui, sans-serif; line-height: 1.6; }
-  a { color: #0b5; }
-  header, main, footer { max-width: 860px; margin: 0 auto; padding: 0 24px; }
-  header { display: flex; justify-content: space-between; align-items: center; padding-top: 22px; padding-bottom: 22px; }
-  .brand { color: #111; text-decoration: none; font-weight: 800; letter-spacing: .04em; }
-  nav a { margin-left: 16px; color: #333; text-decoration: none; }
-  h1 { font-size: 42px; line-height: 1.15; margin: 36px 0 12px; }
-  .tag { font-size: 20px; color: #333; margin: 0 0 28px; }
-  pre, code { font-family: ui-monospace, Menlo, monospace; }
-  pre { background: #161513; color: #f3eee6; padding: 18px 16px; overflow: auto; font-size: 14px; }
-  h2 { margin-top: 48px; font-size: 24px; }
-  h3 { margin-bottom: 6px; }
-  p, li { color: #333; }
-  .note { color: #666; font-size: 14px; }
-  footer { border-top: 1px solid #ddd; margin-top: 56px; padding: 24px; color: #666; font-size: 14px; }
+:root{--ink:#0d0d0d;--mute:#4d4d4d;--line:#e4e0d8;--bg:#fff;--band:#f6f3ec;--go:#0b6b4f;--code:#161412}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3","Apple SD Gothic Neo","Noto Sans KR",ui-sans-serif,system-ui,sans-serif;line-height:1.55}
+a{color:var(--go)}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 7vw;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fffc;backdrop-filter:blur(8px);z-index:3}
+.brand{display:flex;gap:10px;align-items:center;color:var(--ink);text-decoration:none;font-weight:800;letter-spacing:.04em}
+nav{display:flex;gap:22px;font-size:15px}
+nav a{color:var(--ink);text-decoration:none}
+nav a:hover{color:var(--go)}
+.hero{padding:80px 7vw 56px;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;max-width:1180px;margin:0 auto}
+h1{font-size:clamp(56px,8vw,92px);line-height:.95;margin:0;letter-spacing:-.04em}
+.tag{font-size:22px;color:var(--mute);max-width:22em;margin:18px 0 0}
+.row{margin-top:28px;display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;background:var(--go);color:#fff;text-decoration:none;font-weight:700;padding:12px 22px;border-radius:3px}
+.btn.ghost{background:transparent;color:var(--go);border:1px solid var(--go)}
+.hero pre,.panel pre{margin:0;background:var(--code);color:#f4efe6;padding:22px 20px;border-radius:6px;overflow:auto;font:14px/1.7 ui-monospace,"IBM Plex Mono",Menlo,monospace}
+.tok{color:#8be0b8}
+section{padding:64px 7vw}
+.band{background:var(--band)}
+.wrap{max-width:1180px;margin:0 auto}
+h2{font-size:34px;margin:0 0 12px;letter-spacing:-.03em}
+.lead{color:var(--mute);max-width:46em;margin:0 0 32px}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.three h3,.four h3{margin:0 0 8px;font-size:22px}
+.three p,.four p,.card p{margin:0;color:var(--mute)}
+.four{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.card{background:#fff;border:1px solid var(--line);padding:24px;min-height:168px}
+.card a{font-weight:700;text-decoration:none;display:inline-block;margin-top:14px}
+.panel{background:#fff;border:1px solid var(--line);padding:0;overflow:hidden}
+.panel .cap{padding:10px 16px;border-bottom:1px solid var(--line);color:var(--mute);font:12px ui-monospace,Menlo,monospace}
+.facts{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.facts span{border:1px solid var(--line);background:#fff;padding:10px 14px;font-weight:700}
+footer{border-top:1px solid var(--line);padding:40px 7vw 64px;color:var(--mute);font-size:14px}
+footer .wrap{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:28px}
+footer strong{color:var(--ink);display:block;margin-bottom:8px}
+footer a{color:var(--mute);text-decoration:none;display:block;margin:5px 0}
+footer a:hover{color:var(--go)}
+@media(max-width:860px){.hero,.three,.four,footer .wrap{grid-template-columns:1fr}nav{display:none}h1{font-size:56px}}
 </style>
 </head>
 <body>
 <header>
-  <a class="brand" href="./">FreeLang</a>
+  <a class="brand" href="./">
+    <svg width="28" height="28" viewBox="0 0 96 96" fill="none" aria-hidden="true"><rect width="96" height="96" rx="20" fill="#0d0d0d"/><text x="48" y="64" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="42" font-weight="700" fill="#8be0b8">(fl)</text></svg>
+    FreeLang
+  </a>
   <nav>
-    <a href="#what">언어</a>
-    <a href="#can">할 수 있는 일</a>
     <a href="#start">시작</a>
+    <a href="#why">왜</a>
+    <a href="#use">쓰는 곳</a>
     <a href="https://github.com/kimjindol2025/freelang-v11">컴파일러</a>
   </nav>
 </header>
-<main>
-  <h1>FreeLang</h1>
-  <p class="tag">Lisp입니다. 코드가 데이터입니다. 컴파일러가 자기 자신으로 돌아가고, 실행 경로에서 Node와 JS를 쓰지 않습니다. AI가 생성하기 쉽게 문법을 작게 잡았습니다.</p>
-  <pre>(println "Hello from FL!")
-(defn factorial [n]
-  (if (&lt;= n 1) 1 (* n (factorial (- n 1)))))
-(println (factorial 5))</pre>
 
-  <h2 id="what">이 언어가 뭔가</h2>
-  <p>러스트 첫 페이지가 센 이유는 주황색이 아니라 문장입니다. 빠르다, 메모리 안전하다, 도구가 있다. FreeLang의 같은 칸은 아래입니다.</p>
-  <h3>Lisp</h3>
-  <p>S-expression. 함수, 조건, 리스트가 같은 괄호 문법입니다. 생성한 코드를 다시 파싱하고 검사하는 길이 하나입니다.</p>
-  <h3>네이티브 컴파일러</h3>
-  <p>v11은 네이티브 컴파일러와 런타임이 기준입니다. stage 2·3·4 고정점이 같고, 시험 41/41, 감사 44/44입니다. 옛 <code>bootstrap.js</code> / npm 실행은 <code>legacy/</code>입니다.</p>
-  <h3>AI가 깨지 않게</h3>
-  <p>암묵 변환 없음. 순수 계산과 I/O를 나눕니다. 이름은 kebab-case 하나. 에러는 숨기지 않습니다. 같은 입력이면 같은 출력입니다.</p>
+<div class="hero">
+  <div>
+    <h1>FreeLang</h1>
+    <p class="tag">사람이 읽고, 모델이 쓰는 Lisp. 네이티브 컴파일러가 그 코드를 실행합니다.</p>
+    <div class="row">
+      <a class="btn" href="#start">시작하기</a>
+      <a class="btn ghost" href="https://github.com/kimjindol2025/freelang-ai/tree/main/examples">예시</a>
+    </div>
+  </div>
+  <pre><span class="tok">(defn</span> greet [name]
+  (str "Hello, " name "!"))
 
-  <h2 id="can">지금 되는 일</h2>
-  <p>표준 라이브러리로 문자열, 정규식, 파일, 시간, 시험, HTTP, DB를 씁니다. HTTP는 v0.1이고 <strong>HTTPS는 없습니다</strong>. 앱 실행은 컴파일러 바이너리가 아니라 CLI입니다.</p>
-  <pre>;; 컬렉션
-(define nums [1 2 3 4])
-(define person {"name" "Kim" "lang" "FreeLang"})
+<span class="tok">(println</span> (greet "FreeLang"))
+<span class="tok">(println</span> <span class="tok">(+</span> 1 2 3<span class="tok">))</span></pre>
+</div>
 
-;; HTTP 클라이언트 (HTTPS 불가)
-(http-get "http://127.0.0.1:4100/health")</pre>
-  <p class="note">네이티브에서 <code>fl-repl</code> / <code>fl-serve</code>는 아직 없습니다. HTTP 서버·DB가 있는 앱은 <code>scripts/fl-cli.js</code>로 실행합니다.</p>
+<section id="why" class="band">
+  <div class="wrap">
+    <h2>왜 FreeLang인가</h2>
+    <p class="lead">러스트 홈페이지가 말하는 것은 성능·신뢰·생산성입니다. FreeLang이 같은 자리에서 말하는 것은 Lisp, 네이티브 컴파일러, 그리고 모델이 깨지 않는 문법입니다.</p>
+    <div class="three">
+      <div>
+        <h3>Lisp</h3>
+        <p>S-expression. 코드가 데이터입니다. 함수·조건·리스트가 같은 괄호라서 생성하고 검사하고 바꾸는 길이 하나입니다.</p>
+      </div>
+      <div>
+        <h3>네이티브 컴파일러</h3>
+        <p>v11은 네이티브 컴파일러와 런타임이 기준입니다. stage 2·3·4 고정점이 같고, 시험 41/41, 감사 44/44입니다. 실행 경로에 Node와 JS가 없습니다.</p>
+      </div>
+      <div>
+        <h3>모델이 깨지 않게</h3>
+        <p>암묵 변환 없음. 순수 계산과 I/O를 나눕니다. 이름은 kebab-case 하나. 같은 입력이면 같은 출력입니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <h2 id="start">시작</h2>
-  <p>이 저장소는 앞문입니다. 예시 세 개를 읽고, 실행은 컴파일러 저장소에서 합니다.</p>
-  <pre>git clone https://github.com/kimjindol2025/freelang-v11.git
+<section id="use">
+  <div class="wrap">
+    <h2>이 언어로 하는 일</h2>
+    <p class="lead">문자열, 정규식, 파일, 시간, 시험, HTTP, DB. HTTP는 v0.1이고 HTTPS는 없습니다.</p>
+    <div class="four">
+      <article class="card">
+        <h3>함수</h3>
+        <p>이름 있는 함수, 조건, 재귀. 한 파일에 로직을 담습니다.</p>
+        <a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/factorial.fl">factorial.fl →</a>
+      </article>
+      <article class="card">
+        <h3>컬렉션</h3>
+        <p>벡터 <code>[]</code>와 맵 <code>{}</code>가 1급입니다.</p>
+        <a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/collections.fl">collections.fl →</a>
+      </article>
+      <article class="card">
+        <h3>HTTP · DB</h3>
+        <p>클라이언트 HTTP와 DB 런타임이 있습니다. TLS 없음. 서버·REPL은 네이티브에 아직 없습니다.</p>
+        <a href="https://github.com/kimjindol2025/freelang-v11">런타임 문서 →</a>
+      </article>
+      <article class="card">
+        <h3>컴파일러</h3>
+        <p>언어 핵심은 개발 저장소입니다. 이 사이트는 앞문입니다.</p>
+        <a href="https://github.com/kimjindol2025/freelang-v11">freelang-v11 →</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <h2>지금 확인된 것</h2>
+    <p class="lead">회사 로고를 빌려 쓰지 않습니다. 컴파일러 저장소에서 끝난 기록만 적습니다.</p>
+    <div class="facts">
+      <span>stage 2 = 3 = 4</span>
+      <span>시험 41/41</span>
+      <span>감사 44/44</span>
+      <span>실행 경로 Node 0 · JS 0</span>
+      <span>HTTP v0.1 · HTTPS 없음</span>
+    </div>
+  </div>
+</section>
+
+<section id="start">
+  <div class="wrap">
+    <h2>시작하기</h2>
+    <p class="lead">앱 실행은 <code>bin/fl</code>이 아닙니다. HTTP·DB가 있는 프로그램은 CLI로 돌립니다. <code>fl-repl</code> / <code>fl-serve</code>는 네이티브에 아직 없습니다. 옛 bootstrap/npm은 <code>legacy/</code>입니다.</p>
+    <div class="panel">
+      <div class="cap">terminal</div>
+      <pre>git clone https://github.com/kimjindol2025/freelang-v11.git
 cd freelang-v11
 node scripts/fl-cli.js run examples/hello.fl</pre>
-  <p>
-    <a href="https://github.com/kimjindol2025/freelang-ai/tree/main/examples">예시</a> ·
-    <a href="getting-started.md">가이드</a> ·
-    <a href="https://github.com/kimjindol2025/freelang-v11">kimjindol2025/freelang-v11</a>
-  </p>
-</main>
+    </div>
+    <div class="row">
+      <a class="btn" href="getting-started.md">가이드</a>
+      <a class="btn ghost" href="https://github.com/kimjindol2025/freelang-v11">컴파일러 열기</a>
+    </div>
+  </div>
+</section>
+
 <footer>
-  MIT · 홍보 <a href="https://github.com/kimjindol2025/freelang-ai">freelang-ai</a> · 구현 <a href="https://github.com/kimjindol2025/freelang-v11">freelang-v11</a>
+  <div class="wrap">
+    <div>
+      <strong>FreeLang</strong>
+      사람이 읽고, 모델이 쓰는 Lisp.
+    </div>
+    <div>
+      <strong>언어</strong>
+      <a href="#why">왜 FreeLang인가</a>
+      <a href="#use">쓰는 곳</a>
+      <a href="https://github.com/kimjindol2025/freelang-ai/tree/main/examples">예시</a>
+      <a href="getting-started.md">시작 가이드</a>
+    </div>
+    <div>
+      <strong>구현</strong>
+      <a href="https://github.com/kimjindol2025/freelang-v11">freelang-v11</a>
+      <a href="https://github.com/kimjindol2025/freelang-v11/blob/master/LICENSE">MIT License</a>
+    </div>
+    <div>
+      <strong>이 사이트</strong>
+      <a href="https://g-freelang.akl.kr/">g-freelang.akl.kr</a>
+      <a href="https://github.com/kimjindol2025/freelang-ai">GitHub</a>
+    </div>
+  </div>
 </footer>
 </body>
 </html>
