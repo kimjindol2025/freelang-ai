@@ -29,8 +29,8 @@
 <section>
   <div class="wrap prose">
     <h1 style="font-size:52px">Install</h1>
-    <p class="lead">러스트 Install은 rustup 한 줄입니다. FreeLang은 컴파일러를 받아서 gcc로 직접 빌드합니다. 설치기가 숨기지 않습니다.</p>
-    <p>브라우저에서 돌려 보고 싶으면 <a href="../playground/">Playground</a>에서 예제를 읽으십시오. 실행은 이 페이지의 설치 다음입니다.</p>
+    <p class="lead">첫 실행은 node 없는 길입니다. 홍보 저장소의 <code>scripts/install.sh</code>로 FX 컴파일러를 빌드하고, <code>scripts/run.sh</code>로 예제를 돌립니다.</p>
+    <p>예제 코드를 먼저 읽으려면 <a href="../playground/">Playground</a>로 가십시오. 실행은 아래 설치 다음입니다.</p>
 
     <h2>필요한 것</h2>
     <ul>
@@ -38,7 +38,7 @@
       <li><code>gcc</code></li>
       <li>개발 헤더: libsqlite3, libssl, libcurl</li>
     </ul>
-    <p>node, npm, sudo는 쓰지 않습니다.</p>
+    <p>이 경로에는 node, npm, sudo가 필요 없습니다.</p>
 
     <h2>설치</h2>
     <p>홍보 저장소를 받고 <code>scripts/install.sh</code>를 실행합니다. 기본 위치는 <code>~/.freelang</code>입니다.</p>
@@ -56,7 +56,6 @@ scripts/install.sh</pre></div>
     <p>성공하면 터미널에 <code>stage1 == stage2  같음</code>과 SHA-256이 나옵니다.</p>
 
     <h2>첫 프로그램</h2>
-    <p>러스트의 <code>cargo new</code> + <code>cargo run</code>에 해당하는 명령입니다.</p>
     <div class="panel"><div class="cap">terminal</div>
 <pre>scripts/run.sh examples/01-variables.fl</pre></div>
     <p><code>run.sh</code>는 <code>.fl</code>을 C로 바꾸고 gcc로 실행 파일을 만든 뒤 돌립니다. 예제 파일은 이렇습니다.</p>
@@ -78,21 +77,42 @@ scripts/install.sh</pre></div>
 scripts/run.sh examples/10-cli-todo.fl</pre></div>
     <table><thead><tr><th>파일</th><th>주제</th><th>문법</th></tr></thead><tbody><tr><td><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/01-variables.fl">01-variables.fl</a></td><td>변수</td><td>define, let</td></tr><tr><td><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/02-functions.fl">02-functions.fl</a></td><td>함수</td><td>defn, str</td></tr><tr><td><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/03-conditions.fl">03-conditions.fl</a></td><td>조건</td><td>if, cond</td></tr><tr><td><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/04-loops.fl">04-loops.fl</a></td><td>반복</td><td>loop, recur, 재귀</td></tr><tr><td><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/05-strings.fl">05-strings.fl</a></td><td>문자열</td><td>길이, 자르기, 나누기</td></tr><tr><td><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/06-collections.fl">06-collections.fl</a></td><td>컬렉션</td><td>벡터, 맵</td></tr><tr><td><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/07-higher-order.fl">07-higher-order.fl</a></td><td>고차 함수</td><td>map, filter, reduce</td></tr><tr><td><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/08-errors.fl">08-errors.fl</a></td><td>오류</td><td>try, catch, throw</td></tr><tr><td><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/09-files.fl">09-files.fl</a></td><td>파일</td><td>쓰기, 읽기, 지우기</td></tr><tr><td><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/10-cli-todo.fl">10-cli-todo.fl</a></td><td>작은 프로그램</td><td>할 일 목록</td></tr></tbody></table>
 
+    <h2>HTTP·DB 앱 실행 (아직 node 필요)</h2>
+    <p>HTTP와 DB가 붙은 앱은 FX <code>run.sh</code> 경로가 아닙니다. <a href="https://github.com/kimjindol2025/freelang-v11">freelang-v11</a>의 <code>scripts/fl-cli.js</code>로 돌리며, 이 경로는 node가 필요합니다. 숨기지 않습니다.</p>
+    <div class="panel"><div class="cap">terminal</div>
+<pre>git clone https://github.com/kimjindol2025/freelang-v11
+cd freelang-v11
+node scripts/fl-cli.js run examples/hello.fl</pre></div>
+
     <h2>업데이트</h2>
-    <p>러스트의 <code>rustup update</code> 자리입니다. 저장소를 받고 설치 스크립트를 다시 실행합니다. pin 커밋이 바뀌면 새 컴파일러가 내려옵니다.</p>
+    <p>저장소를 받고 설치 스크립트를 다시 실행합니다. pin 커밋이 바뀌면 새 컴파일러가 내려옵니다.</p>
     <div class="panel"><div class="cap">terminal</div>
 <pre>cd freelang-ai
 git pull
 scripts/install.sh</pre></div>
 
     <h2>제거</h2>
-    <p>러스트의 <code>rustup self uninstall</code> 자리입니다.</p>
     <div class="panel"><div class="cap">terminal</div>
 <pre>rm -rf ~/.freelang</pre></div>
     <p>홍보 저장소 폴더 자체는 따로 지우면 됩니다.</p>
 
     <h2>PATH</h2>
     <p>도구는 <code>~/.freelang/bin/flc</code>에 있습니다. 예제 실행은 PATH에 넣지 않아도 <code>scripts/run.sh</code>가 그 경로를 찾습니다. 직접 컴파일하려면 그 바이너리를 부르면 됩니다.</p>
+
+    <h2>아직 없는 것</h2>
+    <p>사이트 안의 빈 칸은 여기 한 곳에 모읍니다.</p>
+    <ul>
+      <li>HTTPS — HTTP v0.1은 TLS가 없습니다.</li>
+      <li>REPL (<code>fl-repl</code>)</li>
+      <li>포맷터</li>
+      <li>린터</li>
+      <li>브라우저에서 컴파일·실행</li>
+      <li>공식 에디터 플러그인</li>
+      <li>공개 RFC 게시판 — 제안은 GitHub 이슈로 남깁니다.</li>
+      <li>메일 목록 — 질문은 <a href="https://github.com/kimjindol2025/freelang-ai/discussions">Users Discussions</a>에 올립니다.</li>
+      <li>공식 밋업 달력</li>
+      <li>재단 법인·후원 창구</li>
+    </ul>
 
     <div class="row">
       <a class="btn" href="../learn/">Learn</a>

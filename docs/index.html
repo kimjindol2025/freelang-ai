@@ -29,7 +29,7 @@
 <div class="hero">
   <div>
     <h1>FreeLang</h1>
-    <p class="tag">사람이 읽고, 모델이 쓰는 Lisp. 컴파일러가 FreeLang으로 쓰여 있고, 자기 자신을 다시 컴파일한 결과가 한 글자도 다르지 않습니다. Node는 쓰지 않습니다.</p>
+    <p class="tag">사람이 읽고, 모델이 쓰는 Lisp. 컴파일러가 FreeLang으로 쓰여 있고, 자기 자신을 다시 컴파일한 결과가 한 글자도 다르지 않습니다.</p>
     <div class="row">
       <a class="btn" href="install/">Install</a>
       <a class="btn ghost" href="learn/">Learn</a>
@@ -43,7 +43,7 @@
 <section class="band">
   <div class="wrap">
     <h2>왜 FreeLang인가</h2>
-    <p class="lead">러스트 홈이 성능·신뢰·생산성을 한 칸씩 채우듯, 여기서는 언어가 실제로 보장하는 세 가지를 적습니다.</p>
+    <p class="lead">언어가 지금 보장하는 세 가지입니다.</p>
     <div class="three">
       <div>
         <h3>Lisp</h3>
@@ -51,7 +51,7 @@
       </div>
       <div>
         <h3>자기 자신을 컴파일</h3>
-        <p><code>bootstrap/stage0.c</code>에서 시작해 stage1·2·3이 동일합니다. 검증 커밋에서 SHA-256이 세 번 같습니다. 실행 경로에 Node·JS가 없습니다.</p>
+        <p>FX 컴파일러 경로(<code>install.sh</code> → <code>flc</code> → gcc)는 Node 0 · JS 0입니다. <code>bootstrap/stage0.c</code>에서 시작해 stage1·2·3이 동일합니다. HTTP·DB 앱은 아직 node 경로입니다.</p>
       </div>
       <div>
         <h3>바로 도는 예제</h3>
@@ -63,28 +63,34 @@
 <section>
   <div class="wrap">
     <h2>이 언어로 하는 일</h2>
-    <p class="lead">러스트가 CLI·Wasm·네트워킹·임베디드로 나눈 칸입니다. FreeLang은 지금 저장소에서 도는 일로 나눕니다.</p>
+    <p class="lead">지금 저장소에서 도는 일로 나눕니다.</p>
     <div class="four">
       <article class="card"><h3>값과 함수</h3><p>이름 붙이기, 함수, 조건, 재귀.</p><a href="learn/">01–04 →</a></article>
       <article class="card"><h3>데이터</h3><p>문자열, 벡터, 맵, map/filter/reduce.</p><a href="learn/">05–07 →</a></article>
       <article class="card"><h3>프로그램</h3><p>오류 처리, 파일, 작은 CLI 할 일 목록.</p><a href="learn/">08–10 →</a></article>
-      <article class="card"><h3>컴파일러</h3><p>gcc로 C를 만들고 실행합니다. 브라우저 컴파일러는 없습니다.</p><a href="tools/">Tools →</a></article>
+      <article class="card"><h3>컴파일러</h3><p>FX 경로에서 <code>.fl</code>을 C로 바꾸고 gcc로 실행합니다.</p><a href="tools/">Tools →</a></article>
     </div>
   </div>
 </section>
 <section class="band">
   <div class="wrap">
     <h2>확인된 고정점</h2>
-    <p class="lead">회사 로고가 아니라, 컴파일러가 자기 소스를 다시 컴파일한 해시입니다. 직접 재현할 수 있습니다.</p>
+    <p class="lead">컴파일러가 자기 소스를 다시 컴파일한 해시입니다. 직접 재현할 수 있습니다. 저장소: <a href="https://github.com/kimjindol2025/freelang-v11-fx">freelang-v11-fx</a></p>
     <div class="panel"><div class="cap">stage1.c == stage2.c == stage3.c</div>
-<pre>aa8bed315d2bae91630fcff72d7edcafb9afafd84dc357133bb271c3d1bda4fd</pre></div>
-    <p class="lead" style="margin-top:16px">재현: <code>git clone https://github.com/kimjindol2025/freelang-v11-fx && ./scripts/verify-native-bootstrap.sh</code></p>
+<pre>stage1.c  aa8bed315d2bae91630fcff72d7edcafb9afafd84dc357133bb271c3d1bda4fd
+stage2.c  aa8bed315d2bae91630fcff72d7edcafb9afafd84dc357133bb271c3d1bda4fd
+stage3.c  aa8bed315d2bae91630fcff72d7edcafb9afafd84dc357133bb271c3d1bda4fd</pre></div>
+    <p class="lead" style="margin-top:16px">확인 명령 (strace 필요):</p>
+    <div class="panel"><div class="cap">terminal</div>
+<pre>git clone https://github.com/kimjindol2025/freelang-v11-fx
+cd freelang-v11-fx
+./scripts/verify-native-bootstrap.sh</pre></div>
   </div>
 </section>
 <section>
   <div class="wrap">
     <h2>시작하기</h2>
-    <p class="lead">러스트의 rustup 자리입니다. git과 gcc가 있으면 됩니다. sudo·node는 필요 없습니다.</p>
+    <p class="lead">FX 컴파일러를 받아 예제를 돌립니다. git과 gcc가 있으면 됩니다. 이 경로에는 node와 sudo가 필요 없습니다. HTTP·DB 앱은 아직 node가 필요합니다. 그 안내는 <a href="install/">Install</a>에 따로 있습니다.</p>
     <div class="panel"><div class="cap">terminal</div>
 <pre>git clone https://github.com/kimjindol2025/freelang-ai
 cd freelang-ai

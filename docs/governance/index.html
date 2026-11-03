@@ -29,20 +29,20 @@
 <section>
   <div class="wrap prose">
     <h1 style="font-size:52px">Governance</h1>
-    <p class="lead">러스트는 RFC로 큰 결정을 열고, 리더십 카운슬과 compiler·lang·library·infra·moderation 팀이 나뉩니다. FreeLang은 그 팀 구조가 없습니다. 대신 저장소 역할이 나뉘어 있습니다.</p>
+    <p class="lead">저장소 역할이 나뉘어 있습니다. 문법과 런타임은 구현 저장소, 예제와 이 사이트는 홍보 저장소입니다.</p>
     <h2>세 저장소</h2>
     <table>
       <thead><tr><th>저장소</th><th>역할</th></tr></thead>
       <tbody>
         <tr><td><a href="https://github.com/kimjindol2025/freelang-ai">freelang-ai</a></td><td>공개 얼굴. README, 예제, install.sh, run.sh, 이 사이트. 컴파일러 소스는 두지 않습니다.</td></tr>
         <tr><td><a href="https://github.com/kimjindol2025/freelang-v11-fx">freelang-v11-fx</a></td><td>네이티브 컴파일러. stage0부터 자기 자신을 컴파일합니다. install.sh가 pin 커밋을 받습니다.</td></tr>
-        <tr><td><a href="https://github.com/kimjindol2025/freelang-v11">freelang-v11</a></td><td>언어 계약과 라이브러리 문서. HTTP·fs·str·시험의 README가 여기 있습니다.</td></tr>
+        <tr><td><a href="https://github.com/kimjindol2025/freelang-v11">freelang-v11</a></td><td>언어 계약과 라이브러리 문서. HTTP·fs·str·시험의 README가 여기 있습니다. HTTP·DB 앱의 node 경로도 여기입니다.</td></tr>
       </tbody>
     </table>
     <h2>무엇이 공식 빌드인가</h2>
     <p><code>scripts/install.sh</code> 안의 <code>FL_PIN</code>이 지금 권장하는 컴파일러 커밋입니다. pin을 바꾸면 설치기가 다른 컴파일러를 빌드합니다. 그 변경은 홍보 저장소의 스크립트 커밋으로 드러납니다.</p>
     <h2>언어 변경</h2>
-    <p>문법과 런타임 패치는 v11 / v11-fx에 넣습니다. 예제와 문장만 고치면 freelang-ai에 넣습니다. 공개 RFC 게시판은 없습니다. 제안은 GitHub 이슈로 남깁니다.</p>
+    <p>문법과 런타임 패치는 v11 / v11-fx에 넣습니다. 예제와 문장만 고치면 freelang-ai에 넣습니다. 제안은 GitHub 이슈로 남깁니다.</p>
     <p><a href="../community/">Community</a>에서 Users와 Internals가 갈라집니다.</p>
   </div>
 </section>

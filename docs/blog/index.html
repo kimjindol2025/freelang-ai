@@ -29,31 +29,34 @@
 <section>
   <div class="wrap prose">
     <h1 style="font-size:52px">Blog</h1>
-    <p class="lead">러스트 블로그는 6주마다 컴파일러 버전을 발표합니다. FreeLang은 그 채널이 따로 없습니다. 대신 검증된 사실을 날짜와 해시와 함께 여기 모읍니다.</p>
+    <p class="lead">검증된 사실을 날짜와 해시와 함께 여기 모읍니다.</p>
   </div>
 </section>
 <section class="band">
   <div class="wrap">
     <article class="card" style="margin-bottom:16px">
       <h3>2026-11-03 · 예제 10개와 설치 스크립트</h3>
-      <p>freelang-ai에 <code>scripts/install.sh</code>, <code>scripts/run.sh</code>, 변수부터 할 일 목록까지 예제를 올렸습니다. FX 컴파일러로 실행을 확인했습니다. node 없이 gcc로 돕니다.</p>
+      <p>freelang-ai에 <code>scripts/install.sh</code>, <code>scripts/run.sh</code>, 변수부터 할 일 목록까지 예제를 올렸습니다. FX 컴파일러로 실행을 확인했습니다. 이 경로는 node 없이 gcc로 돕니다.</p>
       <a href="https://github.com/kimjindol2025/freelang-ai/tree/main/examples">examples/ →</a>
     </article>
     <article class="card" style="margin-bottom:16px">
       <h3>자체 컴파일 고정점</h3>
       <p>freelang-v11-fx에서 stage1.c · stage2.c · stage3.c SHA-256이 같습니다.</p>
       <div class="panel" style="margin-top:12px"><div class="cap">SHA-256</div>
-<pre>aa8bed315d2bae91630fcff72d7edcafb9afafd84dc357133bb271c3d1bda4fd</pre></div>
+<pre>stage1.c  aa8bed315d2bae91630fcff72d7edcafb9afafd84dc357133bb271c3d1bda4fd
+stage2.c  aa8bed315d2bae91630fcff72d7edcafb9afafd84dc357133bb271c3d1bda4fd
+stage3.c  aa8bed315d2bae91630fcff72d7edcafb9afafd84dc357133bb271c3d1bda4fd</pre></div>
+      <p>확인: <code>./scripts/verify-native-bootstrap.sh</code> (strace 필요)</p>
       <a href="https://github.com/kimjindol2025/freelang-v11-fx">저장소 →</a>
     </article>
     <article class="card" style="margin-bottom:16px">
       <h3>v11 완료 기록</h3>
-      <p>stage 2·3·4 고정점, 시험 41/41, 감사 44/44, HTTP·DB, 실행 경로 Node 0. 이력 표가 문서에 있습니다.</p>
+      <p>고정점 이력, HTTP·DB 계약, 라이브러리 README가 문서에 있습니다. FX 컴파일러 경로는 Node 0 · JS 0입니다. HTTP·DB 앱은 아직 node 경로입니다.</p>
       <a href="https://github.com/kimjindol2025/freelang-v11/blob/master/docs/V11_COMPLETE.md">V11_COMPLETE.md →</a>
     </article>
     <article class="card">
       <h3>HTTP v0.1</h3>
-      <p>HTTPS 없음. 타임아웃 기본 5초, 요청/응답 1MiB, IPv4. 계약이 라이브러리 README에 있습니다.</p>
+      <p>타임아웃 기본 5초, 요청/응답 1MiB, IPv4. 계약이 라이브러리 README에 있습니다.</p>
       <a href="https://github.com/kimjindol2025/freelang-v11/blob/master/lib/http/README.md">lib/http/README.md →</a>
     </article>
   </div>

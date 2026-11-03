@@ -29,7 +29,7 @@
 <section>
   <div class="wrap">
     <h1 style="font-size:52px">Playground</h1>
-    <p class="lead">러스트 Playground는 브라우저에서 rustc가 돕니다. FreeLang은 브라우저에 컴파일러를 올리지 않았습니다. 이 페이지는 Rust By Example처럼 코드를 보여 주고, 실행 명령만 적습니다. 돌리려면 <a href="../install/">Install</a>이 필요합니다.</p>
+    <p class="lead">예제 01부터 10까지를 읽고, 내 기계에서 node 없이 실행합니다. 경로는 <a href="../install/">Install</a>과 같습니다: <code>scripts/install.sh</code> → <code>scripts/run.sh</code>.</p>
     <div class="tabs" id="tabs">
       <button class="on" data-k="01-variables.fl">01-variables.fl</button><button class="" data-k="02-functions.fl">02-functions.fl</button><button class="" data-k="03-conditions.fl">03-conditions.fl</button><button class="" data-k="04-loops.fl">04-loops.fl</button><button class="" data-k="05-strings.fl">05-strings.fl</button><button class="" data-k="06-collections.fl">06-collections.fl</button><button class="" data-k="07-higher-order.fl">07-higher-order.fl</button><button class="" data-k="08-errors.fl">08-errors.fl</button><button class="" data-k="09-files.fl">09-files.fl</button><button class="" data-k="10-cli-todo.fl">10-cli-todo.fl</button>
     </div>
@@ -44,14 +44,30 @@
   (println (+ $a $b)))
 </pre>
     </div>
+    <p><a id="src" href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/01-variables.fl">이 파일 소스 →</a></p>
     <h2>이 파일을 실행</h2>
     <div class="panel"><div class="cap">terminal</div>
 <pre id="cmd">scripts/run.sh examples/01-variables.fl</pre></div>
-    <p>컴파일러가 없으면 먼저:</p>
+    <p>컴파일러가 없으면 먼저 (node·sudo 불필요):</p>
     <div class="panel"><div class="cap">terminal</div>
 <pre>git clone https://github.com/kimjindol2025/freelang-ai
 cd freelang-ai
-scripts/install.sh</pre></div>
+scripts/install.sh
+scripts/run.sh examples/01-variables.fl</pre></div>
+    <h2>예제 01–10</h2>
+    <p class="lead">전부 FX 컴파일러로 실행을 확인했습니다. HTTP·DB 앱은 아직 node 경로이며, 그 안내는 <a href="../install/">Install</a>에 있습니다.</p>
+    <table><thead><tr><th>파일</th><th>주제</th><th>실행</th></tr></thead><tbody>
+      <tr><td><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/01-variables.fl">01-variables.fl</a></td><td>변수 · define, let</td><td><code>scripts/run.sh examples/01-variables.fl</code></td></tr>
+      <tr><td><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/02-functions.fl">02-functions.fl</a></td><td>함수 · defn, str</td><td><code>scripts/run.sh examples/02-functions.fl</code></td></tr>
+      <tr><td><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/03-conditions.fl">03-conditions.fl</a></td><td>조건 · if, cond</td><td><code>scripts/run.sh examples/03-conditions.fl</code></td></tr>
+      <tr><td><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/04-loops.fl">04-loops.fl</a></td><td>반복 · loop, recur</td><td><code>scripts/run.sh examples/04-loops.fl</code></td></tr>
+      <tr><td><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/05-strings.fl">05-strings.fl</a></td><td>문자열</td><td><code>scripts/run.sh examples/05-strings.fl</code></td></tr>
+      <tr><td><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/06-collections.fl">06-collections.fl</a></td><td>벡터, 맵</td><td><code>scripts/run.sh examples/06-collections.fl</code></td></tr>
+      <tr><td><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/07-higher-order.fl">07-higher-order.fl</a></td><td>map, filter, reduce</td><td><code>scripts/run.sh examples/07-higher-order.fl</code></td></tr>
+      <tr><td><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/08-errors.fl">08-errors.fl</a></td><td>try, catch, throw</td><td><code>scripts/run.sh examples/08-errors.fl</code></td></tr>
+      <tr><td><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/09-files.fl">09-files.fl</a></td><td>파일 쓰기·읽기</td><td><code>scripts/run.sh examples/09-files.fl</code></td></tr>
+      <tr><td><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/10-cli-todo.fl">10-cli-todo.fl</a></td><td>할 일 목록</td><td><code>scripts/run.sh examples/10-cli-todo.fl</code></td></tr>
+    </tbody></table>
   </div>
 </section>
 <script>
@@ -62,6 +78,7 @@ const code = document.getElementById("code");
 const cap = document.getElementById("cap");
 const cmd = document.getElementById("cmd");
 const meta = document.getElementById("meta");
+const src = document.getElementById("src");
 tabs.addEventListener("click", (e) => {
   const b = e.target.closest("button");
   if (!b) return;
@@ -71,6 +88,7 @@ tabs.addEventListener("click", (e) => {
   cap.textContent = "examples/" + k;
   cmd.textContent = "scripts/run.sh examples/" + k;
   meta.textContent = k + " · " + META[k];
+  src.href = "https://github.com/kimjindol2025/freelang-ai/blob/main/examples/" + k;
 });
 </script>
 

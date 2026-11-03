@@ -12,7 +12,7 @@ Lisp. Native compiler. A language small enough for a model to write, and real en
 
 **Lisp.** S-expressions. Code is data.
 
-**Native compiler.** v11 is node-free on the execution path. Stage 2 = 3 = 4 fixpoint. Tests 41/41, audits 44/44. Old bootstrap/npm lives in `legacy/`.
+**Native compiler.** The FX compiler path (`scripts/install.sh` → `flc` → gcc) is node-free. Stage 1 = 2 = 3 fixpoint. HTTP·DB apps still need node via `scripts/fl-cli.js`.
 
 **For models.** No silent coercion. Pure code vs I/O. One naming rule (kebab-case). Same input, same output.
 
@@ -24,20 +24,7 @@ Native runtime does not yet provide `fl-repl` or `fl-serve`.
 
 ## Start
 
-```bash
-git clone https://github.com/kimjindol2025/freelang-v11.git
-cd freelang-v11
-node scripts/fl-cli.js run examples/hello.fl
-```
-
-- Homepage: https://g-freelang.akl.kr/
-- Examples: [hello](examples/hello.fl) · [factorial](examples/factorial.fl) · [collections](examples/collections.fl)
-- Guide: [docs/getting-started.md](docs/getting-started.md)
-- Compiler: https://github.com/kimjindol2025/freelang-v11
-
-## node 없이 바로 해 보기
-
-FX 컴파일러(FreeLang으로 쓴 컴파일러)를 받아 직접 빌드하고 예제를 돌립니다. node·sudo 필요 없음.
+FX 컴파일러를 받아 예제를 돌립니다. node·sudo 필요 없음.
 
 ```bash
 git clone https://github.com/kimjindol2025/freelang-ai
@@ -47,6 +34,19 @@ scripts/run.sh examples/01-variables.fl    # 예제 실행
 ```
 
 필요한 것: `git`, `gcc`, libsqlite3 · libssl · libcurl 개발 헤더.
+
+HTTP·DB 앱은 아직 node가 필요합니다:
+
+```bash
+git clone https://github.com/kimjindol2025/freelang-v11.git
+cd freelang-v11
+node scripts/fl-cli.js run examples/hello.fl
+```
+
+- Homepage: https://g-freelang.akl.kr/
+- Examples: [hello](examples/hello.fl) · [factorial](examples/factorial.fl) · [collections](examples/collections.fl)
+- Guide: [docs/getting-started.md](docs/getting-started.md)
+- Compiler: https://github.com/kimjindol2025/freelang-v11-fx
 
 ## 스스로를 컴파일한다는 증거
 
