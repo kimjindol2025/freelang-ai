@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FreeLang · Community</title>
-<meta name="description" content="사람이 읽고, 모델이 쓰는 Lisp. 네이티브 컴파일러와 런타임.">
+<meta name="description" content="FreeLang을 쓰는 사람과 만드는 사람이 모이는 곳.">
 <link rel="icon" href="../mark.svg">
 <link rel="stylesheet" href="../site.css">
 </head>
@@ -15,29 +15,61 @@
     FreeLang
   </a>
   <nav>
-    <a class="" href="../install/">Install</a>
-    <a class="" href="../learn/">Learn</a>
-    <a class="" href="../playground/">Playground</a>
-    <a class="" href="../tools/">Tools</a>
-    <a class="" href="../governance/">Governance</a>
-    <a class="" href="../funding/">Funding</a>
+    <a href="../install/">Install</a>
+    <a href="../learn/">Learn</a>
+    <a href="../playground/">Playground</a>
+    <a href="../tools/">Tools</a>
+    <a href="../governance/">Governance</a>
+    <a href="../funding/">Funding</a>
     <a class="on" href="../community/">Community</a>
-    <a class="" href="../blog/">Blog</a>
+    <a href="../blog/">Blog</a>
   </nav>
 </header>
-
 <section>
-  <div class="wrap prose">
+  <div class="wrap">
     <h1 style="font-size:48px">Community</h1>
-    <p class="lead">러스트는 Users 포럼, Internals 포럼, Zulip, 밋업, 행동강령이 있습니다. FreeLang은 그 창구가 없습니다.</p>
-    <h2>지금 닿는 곳</h2>
-    <p>코드와 이슈는 GitHub입니다.</p>
-    <p><a href="https://github.com/kimjindol2025/freelang-v11">컴파일러</a> · <a href="https://github.com/kimjindol2025/freelang-ai">홍보 저장소</a></p>
-    <h2>없는 것</h2>
-    <p>포럼, 채팅 서버, 공식 밋업 달력, 중재 메일. 생기면 이 페이지에 적습니다.</p>
+    <p class="lead">FreeLang의 힘은 문법보다, 그 코드를 같이 읽고 고치는 사람입니다. 질문은 여기서, 컴파일러 논의는 개발 저장소에서 합니다.</p>
+    <div class="four">
+      <article class="card">
+        <h3>Users</h3>
+        <p>설치, 문법, 예시, “이게 되나”는 여기 올립니다. 처음 쓰는 사람용입니다.</p>
+        <a href="https://github.com/kimjindol2025/freelang-ai/discussions">Discussions →</a>
+      </article>
+      <article class="card">
+        <h3>Internals</h3>
+        <p>컴파일러, 런타임, 고정점, HTTP/DB 계약. 언어 자체를 고치는 이야기입니다.</p>
+        <a href="https://github.com/kimjindol2025/freelang-v11/issues">v11 Issues →</a>
+      </article>
+    </div>
   </div>
 </section>
-
+<section class="band">
+  <div class="wrap">
+    <h2>읽고, 연락하고</h2>
+    <div class="docs">
+      <article class="card">
+        <h3>기록</h3>
+        <p>릴리스와 계약은 Blog에 모읍니다. 러스트의 This Week in Rust 자리입니다.</p>
+        <a href="../blog/">Blog →</a>
+      </article>
+      <article class="card">
+        <h3>연락</h3>
+        <p>메일 창구 대신 GitHub입니다. 어디에 올릴지 모르겠으면 Users Discussions에 쓰십시오.</p>
+        <a href="https://github.com/kimjindol2025/freelang-ai/discussions/new">질문 열기 →</a>
+      </article>
+      <article class="card">
+        <h3>행동 강령</h3>
+        <p>공식 공간에서 사람을 밀어내지 않습니다. 이슈, 토론, 커밋 메시지에 같이 적용합니다.</p>
+        <a href="../policies/code-of-conduct/">Code of conduct →</a>
+      </article>
+      <article class="card">
+        <h3>코드</h3>
+        <p>홍보는 freelang-ai, 구현은 freelang-v11. 패치는 해당 저장소로 보내십시오.</p>
+        <a href="https://github.com/kimjindol2025/freelang-v11">v11 →</a>
+      </article>
+    </div>
+  </div>
+</section>
 <footer>
   <div class="wrap">
     <div><strong>FreeLang</strong>사람이 읽고, 모델이 쓰는 Lisp.</div>
@@ -59,4 +91,5 @@
     </div>
   </div>
 </footer>
-</body></html>
+</body>
+</html>
