@@ -1,32 +1,30 @@
 # Getting started
 
-This repository is the public introduction to FreeLang.
-The compiler and runtime live in the development repo.
+This repository is the public face of FreeLang.
+The compiler lives in [freelang-v11](https://github.com/kimjindol2025/freelang-v11).
 
-## What to read first
+## 1. Read the language
 
-1. [README](../README.md) — one-page overview
-2. `examples/hello.fl` — print and arithmetic
-3. `examples/factorial.fl` — recursive function
-4. `examples/collections.fl` — vectors and maps
+Start with three files. That is the whole intro.
 
-## Syntax in short
+- [examples/hello.fl](../examples/hello.fl) — print and arithmetic
+- [examples/factorial.fl](../examples/factorial.fl) — a recursive function
+- [examples/collections.fl](../examples/collections.fl) — vectors and maps
 
-FreeLang is Lisp-like. Code is lists in parentheses.
+## 2. Syntax
+
+Code is lists. Vectors use `[]`. Maps use `{}`.
 
 ```freelang
 (println "Hello from FL!")
 (+ 1 2 3)
 (defn square [n] (* n n))
-```
-
-Vectors use `[]`. Maps use `{}`.
-
-```freelang
 [1 2 3]
 {"name" "Kim"}
 ```
 
-## Implementation
+## 3. Compiler
 
-Language core, compiler, and tests: [kimjindol2025/freelang-v11](https://github.com/kimjindol2025/freelang-v11)
+Clone the development repo when you want to run or build:
+
+https://github.com/kimjindol2025/freelang-v11

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FreeLang — AI가 잡고 쓰는 Lisp</title>
+<meta name="description" content="FreeLang is a Lisp-like language made to be written, read, and checked by people and models.">
+<link rel="icon" href="mark.svg">
+<style>
+  :root {
+    --bg: #0f0e0c;
+    --ink: #f3ece2;
+    --mute: #9a9186;
+    --line: #2a261f;
+    --card: #18150f;
+    --gold: #e8c07a;
+    --code: #1c1914;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Noto Serif KR", "Song Myung", serif;
+    line-height: 1.55;
+  }
+  a { color: var(--gold); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 8vw;
+    border-bottom: 1px solid var(--line);
+  }
+  .brand {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    color: var(--ink);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-decoration: none;
+  }
+  .brand img { width: 28px; height: 28px; }
+  nav { display: flex; gap: 18px; font-size: 14px; font-family: ui-sans-serif, system-ui, sans-serif; }
+  nav a { color: var(--mute); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+  .hero { padding: 72px 8vw 36px; max-width: 1100px; }
+  .kicker {
+    font-family: ui-monospace, Menlo, monospace;
+    color: var(--gold);
+    letter-spacing: .16em;
+    font-size: 12px;
+    margin: 0 0 18px;
+  }
+  h1 {
+    margin: 0;
+    font-size: clamp(42px, 7vw, 78px);
+    line-height: 1.05;
+    font-weight: 700;
+  }
+  .lead {
+    max-width: 34em;
+    color: var(--mute);
+    font-size: 19px;
+    margin: 22px 0 0;
+    font-family: ui-sans-serif, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  }
+  .actions { margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn {
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 12px 18px;
+    border-radius: 999px;
+    border: 1px solid var(--gold);
+    color: var(--bg);
+    background: var(--gold);
+    text-decoration: none;
+  }
+  .btn.ghost { background: transparent; color: var(--gold); }
+  .stage {
+    margin: 12px 8vw 64px;
+    background: var(--code);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+    max-width: 920px;
+  }
+  .stage .bar {
+    padding: 10px 16px;
+    color: var(--mute);
+    font-family: ui-monospace, Menlo, monospace;
+    font-size: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  pre {
+    margin: 0;
+    padding: 22px 20px 26px;
+    overflow: auto;
+    font-family: ui-monospace, "IBM Plex Mono", Menlo, monospace;
+    font-size: 14px;
+    line-height: 1.65;
+    color: #f6efe4;
+  }
+  .gold { color: var(--gold); }
+  section { padding: 8px 8vw 56px; max-width: 1100px; }
+  h2 {
+    font-size: 28px;
+    margin: 0 0 10px;
+  }
+  .why {
+    color: var(--mute);
+    max-width: 40em;
+    font-family: ui-sans-serif, "Apple SD Gothic Neo", sans-serif;
+    margin: 0 0 28px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  article {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 22px;
+  }
+  article h3 { margin: 0 0 8px; font-size: 20px; }
+  article p {
+    margin: 0;
+    color: var(--mute);
+    font-family: ui-sans-serif, "Apple SD Gothic Neo", sans-serif;
+    font-size: 14px;
+  }
+  article pre {
+    margin-top: 16px;
+    padding: 14px;
+    background: #12100c;
+    border-radius: 10px;
+    font-size: 13px;
+  }
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 28px 8vw 56px;
+    color: var(--mute);
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+</style>
+</head>
+<body>
+<header>
+  <a class="brand" href="./"><img src="mark.svg" alt=""> FreeLang</a>
+  <nav>
+    <a href="#why">Why</a>
+    <a href="#lang">Language</a>
+    <a href="https://github.com/kimjindol2025/freelang-v11">Compiler</a>
+  </nav>
+</header>
+<main>
+  <div class="hero">
+    <p class="kicker">LISP · FOR MODELS · V11</p>
+    <h1>AI가 잡고<br>쓰는 Lisp.</h1>
+    <p class="lead">Code is data. The surface is small enough for a model to hold, and real enough to compile itself. FreeLang is a Lisp-like language for people and agents that write programs together.</p>
+    <div class="actions">
+      <a class="btn" href="https://github.com/kimjindol2025/freelang-ai/tree/main/examples">See examples</a>
+      <a class="btn ghost" href="https://github.com/kimjindol2025/freelang-v11">Open the compiler</a>
+    </div>
+  </div>
+  <div class="stage">
+    <div class="bar">examples/hello.fl</div>
+    <pre><span class="gold">(println</span> "Hello from FL!"<span class="gold">)</span>
+<span class="gold">(println</span> <span class="gold">(+</span> 1 2 3<span class="gold">))</span></pre>
+  </div>
+  <section id="why">
+    <h2>다른 언어 첫 페이지가 하는 일</h2>
+    <p class="why">Gleam, Elixir, Zig, Clojure, Fennel은 모두 같은 뼈대를 씁니다. 한 문장으로 정체를 말하고, 바로 코드를 보여주고, 주장마다 예시를 붙입니다. FreeLang도 그 뼈대로 소개합니다.</p>
+    <div class="grid">
+      <article>
+        <h3>Lisp</h3>
+        <p>괄호가 문법입니다. 코드와 데이터가 같은 모양이라 생성·검사·변환이 한 경로입니다.</p>
+        <pre>(defn greet [name]
+  (str "Hello, " name "!"))</pre>
+      </article>
+      <article>
+        <h3>For models</h3>
+        <p>키워드가 적고, 파일이 짧고, 매크로 없이 읽을 수 있습니다. 에이전트가 한 화면에 담습니다.</p>
+        <pre>(defn factorial [n]
+  (if (&lt;= n 1) 1
+    (* n (factorial (- n 1)))))</pre>
+      </article>
+      <article>
+        <h3>Real work</h3>
+        <p>함수, 컬렉션, HTTP, DB. 홍보용 장난감이 아니라 컴파일러가 있는 언어입니다.</p>
+        <pre>(define nums [1 2 3 4])
+(define person {"lang" "FreeLang"})</pre>
+      </article>
+    </div>
+  </section>
+  <section id="lang">
+    <h2>시작</h2>
+    <p class="why">이 저장소는 앞문입니다. README, 라이선스, 예시. 컴파일러·런타임·시험은 개발 저장소에 있습니다.</p>
+    <div class="actions">
+      <a class="btn" href="getting-started.md">Getting started</a>
+      <a class="btn ghost" href="https://github.com/kimjindol2025/freelang-ai">GitHub</a>
+    </div>
+  </section>
+</main>
+<footer>
+  <span>FreeLang · MIT</span>
+  <span>Promo: freelang-ai · Core: freelang-v11</span>
+</footer>
+</body>
+</html>
