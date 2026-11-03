@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FreeLang — AI가 잡고 쓰는 Lisp</title>
-<meta name="description" content="FreeLang is a Lisp-like language made to be written, read, and checked by people and models.">
+<title>FreeLang</title>
+<meta name="description" content="사람이 읽고, 모델이 쓰는 Lisp.">
 <link rel="icon" href="mark.svg">
 <style>
   :root {
-    --bg: #0f0e0c;
-    --ink: #f3ece2;
-    --mute: #9a9186;
-    --line: #2a261f;
-    --card: #18150f;
-    --gold: #e8c07a;
-    --code: #1c1914;
+    --ink: #121212;
+    --mute: #4a4a4a;
+    --line: #e6e1d8;
+    --bg: #fff;
+    --panel: #f4f1ea;
+    --accent: #0b6b4f;
+    --accent-ink: #fff;
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -22,201 +22,257 @@
     margin: 0;
     background: var(--bg);
     color: var(--ink);
-    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Noto Serif KR", "Song Myung", serif;
+    font-family: "Source Sans 3", "Apple SD Gothic Neo", "Noto Sans KR", ui-sans-serif, system-ui, sans-serif;
     line-height: 1.55;
   }
-  a { color: var(--gold); text-decoration: none; }
-  a:hover { text-decoration: underline; }
+  a { color: var(--accent); }
   header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 22px 8vw;
+    padding: 16px 7vw;
     border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 0;
+    background: #fffc;
+    backdrop-filter: blur(8px);
+    z-index: 2;
   }
   .brand {
     display: flex;
-    gap: 10px;
     align-items: center;
+    gap: 10px;
     color: var(--ink);
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-weight: 700;
+    text-decoration: none;
+    font-weight: 800;
     letter-spacing: .04em;
-    text-decoration: none;
   }
-  .brand img { width: 28px; height: 28px; }
-  nav { display: flex; gap: 18px; font-size: 14px; font-family: ui-sans-serif, system-ui, sans-serif; }
-  nav a { color: var(--mute); text-decoration: none; }
-  nav a:hover { color: var(--ink); }
-  .hero { padding: 72px 8vw 36px; max-width: 1100px; }
-  .kicker {
-    font-family: ui-monospace, Menlo, monospace;
-    color: var(--gold);
-    letter-spacing: .16em;
-    font-size: 12px;
-    margin: 0 0 18px;
+  .brand svg { display: block; }
+  nav { display: flex; gap: 20px; font-size: 15px; }
+  nav a { color: var(--ink); text-decoration: none; }
+  nav a:hover { color: var(--accent); }
+  .hero {
+    padding: 72px 7vw 48px;
+    display: grid;
+    grid-template-columns: 1.1fr .9fr;
+    gap: 40px;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
   }
-  h1 {
-    margin: 0;
-    font-size: clamp(42px, 7vw, 78px);
-    line-height: 1.05;
-    font-weight: 700;
-  }
-  .lead {
-    max-width: 34em;
+  h1 { font-size: clamp(44px, 6vw, 72px); line-height: 1.05; margin: 0; letter-spacing: -.03em; }
+  .tag {
+    font-size: 22px;
     color: var(--mute);
-    font-size: 19px;
-    margin: 22px 0 0;
-    font-family: ui-sans-serif, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    max-width: 22em;
+    margin: 18px 0 0;
   }
-  .actions { margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .actions { margin-top: 28px; display: flex; gap: 12px; flex-wrap: wrap; }
   .btn {
-    font-family: ui-sans-serif, system-ui, sans-serif;
-    font-weight: 700;
-    font-size: 14px;
-    padding: 12px 18px;
-    border-radius: 999px;
-    border: 1px solid var(--gold);
-    color: var(--bg);
-    background: var(--gold);
+    display: inline-block;
+    background: var(--accent);
+    color: var(--accent-ink);
     text-decoration: none;
+    font-weight: 700;
+    padding: 12px 22px;
+    border-radius: 4px;
   }
-  .btn.ghost { background: transparent; color: var(--gold); }
-  .stage {
-    margin: 12px 8vw 64px;
-    background: var(--code);
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    overflow: hidden;
-    max-width: 920px;
+  .btn.ghost {
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
   }
-  .stage .bar {
-    padding: 10px 16px;
-    color: var(--mute);
-    font-family: ui-monospace, Menlo, monospace;
-    font-size: 12px;
-    border-bottom: 1px solid var(--line);
-  }
-  pre {
+  .hero pre {
     margin: 0;
-    padding: 22px 20px 26px;
+    background: #1b1a17;
+    color: #f4efe6;
+    padding: 22px 20px;
+    border-radius: 6px;
     overflow: auto;
     font-family: ui-monospace, "IBM Plex Mono", Menlo, monospace;
     font-size: 14px;
-    line-height: 1.65;
-    color: #f6efe4;
+    line-height: 1.7;
   }
-  .gold { color: var(--gold); }
-  section { padding: 8px 8vw 56px; max-width: 1100px; }
-  h2 {
-    font-size: 28px;
-    margin: 0 0 10px;
-  }
-  .why {
-    color: var(--mute);
-    max-width: 40em;
-    font-family: ui-sans-serif, "Apple SD Gothic Neo", sans-serif;
-    margin: 0 0 28px;
-  }
-  .grid {
+  .gold { color: #8be0b8; }
+  section { padding: 56px 7vw; }
+  section.alt { background: var(--panel); }
+  .wrap { max-width: 1200px; margin: 0 auto; }
+  h2 { font-size: 32px; margin: 0 0 28px; letter-spacing: -.02em; }
+  .cols {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
   }
-  article {
-    background: var(--card);
+  .cols h3 { margin: 0 0 8px; font-size: 22px; }
+  .cols p { margin: 0; color: var(--mute); }
+  .domains {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+  .domain {
+    background: #fff;
     border: 1px solid var(--line);
-    border-radius: 16px;
     padding: 22px;
+    min-height: 150px;
   }
-  article h3 { margin: 0 0 8px; font-size: 20px; }
-  article p {
-    margin: 0;
-    color: var(--mute);
-    font-family: ui-sans-serif, "Apple SD Gothic Neo", sans-serif;
-    font-size: 14px;
+  .domain h3 { margin: 0 0 8px; }
+  .domain p { margin: 0 0 12px; color: var(--mute); }
+  .domain a { font-weight: 700; text-decoration: none; }
+  .used {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
   }
-  article pre {
-    margin-top: 16px;
-    padding: 14px;
-    background: #12100c;
-    border-radius: 10px;
-    font-size: 13px;
+  .used span {
+    border: 1px solid var(--line);
+    background: #fff;
+    padding: 10px 14px;
+    font-weight: 700;
   }
   footer {
     border-top: 1px solid var(--line);
-    padding: 28px 8vw 56px;
+    padding: 36px 7vw 56px;
     color: var(--mute);
-    font-family: ui-sans-serif, system-ui, sans-serif;
-    font-size: 13px;
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-    flex-wrap: wrap;
+    font-size: 14px;
+  }
+  footer .wrap { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 24px; }
+  footer strong { color: var(--ink); display: block; margin-bottom: 8px; }
+  footer a { color: var(--mute); text-decoration: none; display: block; margin: 4px 0; }
+  footer a:hover { color: var(--accent); }
+  @media (max-width: 860px) {
+    .hero, .cols, .domains, footer .wrap { grid-template-columns: 1fr; }
+    nav { display: none; }
   }
 </style>
 </head>
 <body>
 <header>
-  <a class="brand" href="./"><img src="mark.svg" alt=""> FreeLang</a>
+  <a class="brand" href="./">
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 96 96" fill="none" aria-hidden="true">
+      <rect width="96" height="96" rx="20" fill="#121212"/>
+      <text x="48" y="64" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="42" font-weight="700" fill="#8be0b8">(fl)</text>
+    </svg>
+    FreeLang
+  </a>
   <nav>
-    <a href="#why">Why</a>
-    <a href="#lang">Language</a>
-    <a href="https://github.com/kimjindol2025/freelang-v11">Compiler</a>
+    <a href="#start">시작</a>
+    <a href="#why">언어</a>
+    <a href="#use">쓰는 곳</a>
+    <a href="https://github.com/kimjindol2025/freelang-v11">컴파일러</a>
   </nav>
 </header>
 <main>
   <div class="hero">
-    <p class="kicker">LISP · FOR MODELS · V11</p>
-    <h1>AI가 잡고<br>쓰는 Lisp.</h1>
-    <p class="lead">Code is data. The surface is small enough for a model to hold, and real enough to compile itself. FreeLang is a Lisp-like language for people and agents that write programs together.</p>
-    <div class="actions">
-      <a class="btn" href="https://github.com/kimjindol2025/freelang-ai/tree/main/examples">See examples</a>
-      <a class="btn ghost" href="https://github.com/kimjindol2025/freelang-v11">Open the compiler</a>
+    <div>
+      <h1>FreeLang</h1>
+      <p class="tag">사람이 읽고, 모델이 쓰는 Lisp. 작은 문법으로 프로그램을 만들고, 컴파일러가 그 코드를 실행합니다.</p>
+      <div class="actions">
+        <a class="btn" href="#start">시작하기</a>
+        <a class="btn ghost" href="https://github.com/kimjindol2025/freelang-ai/tree/main/examples">예시 보기</a>
+      </div>
     </div>
-  </div>
-  <div class="stage">
-    <div class="bar">examples/hello.fl</div>
-    <pre><span class="gold">(println</span> "Hello from FL!"<span class="gold">)</span>
+    <pre><span class="gold">(defn</span> greet [name]
+  (str "Hello, " name "!"))
+
+<span class="gold">(println</span> (greet "FreeLang"))
 <span class="gold">(println</span> <span class="gold">(+</span> 1 2 3<span class="gold">))</span></pre>
   </div>
-  <section id="why">
-    <h2>다른 언어 첫 페이지가 하는 일</h2>
-    <p class="why">Gleam, Elixir, Zig, Clojure, Fennel은 모두 같은 뼈대를 씁니다. 한 문장으로 정체를 말하고, 바로 코드를 보여주고, 주장마다 예시를 붙입니다. FreeLang도 그 뼈대로 소개합니다.</p>
-    <div class="grid">
-      <article>
-        <h3>Lisp</h3>
-        <p>괄호가 문법입니다. 코드와 데이터가 같은 모양이라 생성·검사·변환이 한 경로입니다.</p>
-        <pre>(defn greet [name]
-  (str "Hello, " name "!"))</pre>
-      </article>
-      <article>
-        <h3>For models</h3>
-        <p>키워드가 적고, 파일이 짧고, 매크로 없이 읽을 수 있습니다. 에이전트가 한 화면에 담습니다.</p>
-        <pre>(defn factorial [n]
-  (if (&lt;= n 1) 1
-    (* n (factorial (- n 1)))))</pre>
-      </article>
-      <article>
-        <h3>Real work</h3>
-        <p>함수, 컬렉션, HTTP, DB. 홍보용 장난감이 아니라 컴파일러가 있는 언어입니다.</p>
-        <pre>(define nums [1 2 3 4])
-(define person {"lang" "FreeLang"})</pre>
-      </article>
+
+  <section id="why" class="alt">
+    <div class="wrap">
+      <h2>왜 FreeLang인가</h2>
+      <div class="cols">
+        <div>
+          <h3>작다</h3>
+          <p>키워드가 적고 파일이 짧습니다. 한 화면에서 읽고, 고치고, 생성할 수 있습니다. 모델이 문법을 잃어버리지 않습니다.</p>
+        </div>
+        <div>
+          <h3>코드가 데이터</h3>
+          <p>Lisp입니다. 프로그램이 리스트라서 만들고 검사하고 바꾸는 길이 같습니다. 에이전트가 코드를 조작하기 쉽습니다.</p>
+        </div>
+        <div>
+          <h3>실제로 돈다</h3>
+          <p>홍보용 장난감이 아닙니다. 함수, 컬렉션, HTTP, DB가 있고 컴파일러 저장소가 따로 있습니다.</p>
+        </div>
+      </div>
     </div>
   </section>
-  <section id="lang">
-    <h2>시작</h2>
-    <p class="why">이 저장소는 앞문입니다. README, 라이선스, 예시. 컴파일러·런타임·시험은 개발 저장소에 있습니다.</p>
-    <div class="actions">
-      <a class="btn" href="getting-started.md">Getting started</a>
-      <a class="btn ghost" href="https://github.com/kimjindol2025/freelang-ai">GitHub</a>
+
+  <section id="use">
+    <div class="wrap">
+      <h2>이 언어로 하는 일</h2>
+      <div class="domains">
+        <article class="domain">
+          <h3>에이전트와 같이 쓰기</h3>
+          <p>짧은 S-expression을 생성하고 바로 검토합니다. AI가 쓴 코드가 사람 눈에도 같은 모양입니다.</p>
+          <a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/hello.fl">hello.fl →</a>
+        </article>
+        <article class="domain">
+          <h3>함수와 재귀</h3>
+          <p>이름 있는 함수, 조건, 재귀. 한 파일에 로직을 담습니다.</p>
+          <a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/factorial.fl">factorial.fl →</a>
+        </article>
+        <article class="domain">
+          <h3>컬렉션</h3>
+          <p>벡터와 맵이 1급입니다. 데이터를 코드 옆에 둡니다.</p>
+          <a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/collections.fl">collections.fl →</a>
+        </article>
+        <article class="domain">
+          <h3>컴파일러</h3>
+          <p>언어 핵심, 런타임, 시험은 개발 저장소에 있습니다. 이 페이지는 앞문입니다.</p>
+          <a href="https://github.com/kimjindol2025/freelang-v11">freelang-v11 →</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt">
+    <div class="wrap">
+      <h2>지금 돌아가는 곳</h2>
+      <p style="color:var(--mute);max-width:40em">스타트업 로고를 빌려 쓰지 않습니다. 이 서버에서 실제로 쓰는 것만 적습니다.</p>
+      <div class="used" style="margin-top:18px">
+        <span>ERP</span>
+        <span>사이트 관리</span>
+        <span>컴파일러 v11</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="start">
+    <div class="wrap">
+      <h2>시작하기</h2>
+      <p style="color:var(--mute);max-width:40em">먼저 세 예시를 읽습니다. 실행과 빌드는 개발 저장소에서 합니다.</p>
+      <div class="actions">
+        <a class="btn" href="getting-started.md">가이드</a>
+        <a class="btn ghost" href="https://github.com/kimjindol2025/freelang-v11">컴파일러 열기</a>
+      </div>
     </div>
   </section>
 </main>
 <footer>
-  <span>FreeLang · MIT</span>
-  <span>Promo: freelang-ai · Core: freelang-v11</span>
+  <div class="wrap">
+    <div>
+      <strong>FreeLang</strong>
+      사람이 읽고, 모델이 쓰는 Lisp.
+    </div>
+    <div>
+      <strong>언어</strong>
+      <a href="https://github.com/kimjindol2025/freelang-ai/tree/main/examples">예시</a>
+      <a href="getting-started.md">시작 가이드</a>
+      <a href="https://github.com/kimjindol2025/freelang-ai">홍보 저장소</a>
+    </div>
+    <div>
+      <strong>구현</strong>
+      <a href="https://github.com/kimjindol2025/freelang-v11">freelang-v11</a>
+      <a href="https://github.com/kimjindol2025/freelang-v11/blob/master/LICENSE">MIT License</a>
+    </div>
+    <div>
+      <strong>사이트</strong>
+      <a href="https://g-freelang.akl.kr/">g-freelang.akl.kr</a>
+      <a href="https://kimjindol2025.github.io/freelang-ai/">GitHub Pages</a>
+    </div>
+  </div>
 </footer>
 </body>
 </html>
