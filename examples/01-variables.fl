@@ -1,0 +1,7 @@
+;; 01 변수: define으로 이름을 붙이고, let으로 잠깐 쓰는 값을 만듭니다.
+(define name "FreeLang")
+(define year 2026)
+(println name)
+(println year)
+(let [$a 10 $b 32]
+  (println (+ $a $b)))

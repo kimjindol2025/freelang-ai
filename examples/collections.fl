@@ -1,7 +1,7 @@
 (define nums [1 2 3 4])
-(println (vec-len nums))
-(println (vec-get nums 0))
+(println (length nums))
+(println (nth nums 0))
 
 (define person {"name" "Kim" "lang" "FreeLang"})
-(println (map-get person "name"))
-(println (map-get person "lang"))
+(println (get person "name"))
+(println (get person "lang"))

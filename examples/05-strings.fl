@@ -1,0 +1,8 @@
+;; 05 문자열: 이어 붙이기, 길이, 대문자, 자르기, 나누기.
+(define s "hello freelang")
+(println (str s " !"))
+(println (str-length s))
+(println (str-to-upper s))
+(println (str-slice s 0 5))
+(println (str-includes s "free"))
+(println (str-split "a,b,c" ","))

@@ -1,0 +1,8 @@
+;; 06 벡터와 맵: 여러 값을 묶어 두고 꺼내 씁니다.
+(define nums [10 20 30])
+(println (length nums))
+(println (nth nums 1))
+(println (first nums))
+(define user {"name" "Kim" "lang" "FreeLang"})
+(println (get user "name"))
+(println (get (assoc user "lang" "FL") "lang"))

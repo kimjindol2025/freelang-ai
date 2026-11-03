@@ -30,3 +30,12 @@ node scripts/fl-cli.js run examples/hello.fl
 ## 4. Compiler
 
 https://github.com/kimjindol2025/freelang-v11
+
+## 5. node 없이 (FX 컴파일러)
+
+```bash
+scripts/install.sh                      # freelang-v11-fx를 받아 빌드, stage1 == stage2 확인
+scripts/run.sh examples/01-variables.fl # .fl 하나를 컴파일해 실행
+```
+
+예제 01~10은 이 방법으로 실제 실행해 확인했습니다.

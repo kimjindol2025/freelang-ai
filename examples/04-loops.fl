@@ -1,0 +1,10 @@
+;; 04 반복: loop와 recur로 1부터 10까지 더합니다. 재귀 함수도 함께 봅니다.
+(defn sum-to [$n]
+  (loop [$i 1 $acc 0]
+    (if (> $i $n)
+      $acc
+      (recur (+ $i 1) (+ $acc $i)))))
+(defn fib [$n]
+  (if (< $n 2) $n (+ (fib (- $n 1)) (fib (- $n 2)))))
+(println (sum-to 10))
+(println (fib 20))

@@ -1,0 +1,7 @@
+;; 09 파일: 파일에 쓰고, 다시 읽고, 지웁니다.
+(define path "/tmp/freelang-example.txt")
+(file-write path "FreeLang이 쓴 파일입니다")
+(println (file-exists? path))
+(println (file-read path))
+(file-delete path)
+(println (file-exists? path))

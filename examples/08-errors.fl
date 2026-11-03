@@ -1,0 +1,5 @@
+;; 08 오류 처리: throw로 오류를 던지고 try/catch로 받습니다.
+(defn safe-div [$a $b]
+  (if (= $b 0) (throw "0으로 나눌 수 없어요") (/ $a $b)))
+(println (try (safe-div 10 2) (catch $e (str "오류: " $e))))
+(println (try (safe-div 1 0) (catch $e (str "오류: " $e))))

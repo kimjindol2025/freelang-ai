@@ -1,0 +1,9 @@
+;; 10 작은 프로그램: 할 일 목록을 만들고 완료 개수를 셉니다.
+(define todos [{"title" "언어 배우기" "done" true}
+               {"title" "예제 돌리기" "done" true}
+               {"title" "내 프로그램 만들기" "done" false}])
+(defn show [$t]
+  (println (str (if (get $t "done") "[x] " "[ ] ") (get $t "title"))))
+(map show todos)
+(define done (length (filter (fn [$t] (get $t "done")) todos)))
+(println (str "완료 " done " / " (length todos)))

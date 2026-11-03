@@ -1,0 +1,5 @@
+;; 07 고차 함수: map, filter, reduce로 목록을 한 번에 다룹니다.
+(define nums [1 2 3 4 5 6])
+(println (map (fn [$x] (* $x $x)) nums))
+(println (filter (fn [$x] (= (% $x 2) 0)) nums))
+(println (reduce (fn [$acc $x] (+ $acc $x)) 0 nums))

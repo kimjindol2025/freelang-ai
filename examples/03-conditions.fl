@@ -1,0 +1,10 @@
+;; 03 조건: if는 둘 중 하나, cond는 여러 갈래를 고릅니다.
+(defn sign [$n]
+  (cond
+    (< $n 0) "음수"
+    (= $n 0) "영"
+    true     "양수"))
+(println (if (> 3 2) "크다" "작다"))
+(println (sign -5))
+(println (sign 0))
+(println (sign 9))

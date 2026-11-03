@@ -1,0 +1,5 @@
+;; 02 함수: defn으로 함수를 만들고 부릅니다.
+(defn square [$n] (* $n $n))
+(defn greet [$who] (str "안녕하세요, " $who "!"))
+(println (square 7))
+(println (greet "FreeLang"))
