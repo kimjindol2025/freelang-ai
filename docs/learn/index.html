@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FreeLang · Learn</title>
-<meta name="description" content="사람이 읽고, 모델이 쓰는 Lisp. 네이티브 컴파일러와 런타임.">
+<meta name="description" content="사람이 읽고, 모델이 쓰는 Lisp. 네이티브 컴파일러가 자기 자신을 컴파일합니다.">
 <link rel="icon" href="../mark.svg">
 <link rel="stylesheet" href="../site.css">
 </head>
@@ -15,58 +15,74 @@
     FreeLang
   </a>
   <nav>
-    <a class="" href="../install/">Install</a>
+        <a href="../install/">Install</a>
     <a class="on" href="../learn/">Learn</a>
-    <a class="" href="../playground/">Playground</a>
-    <a class="" href="../tools/">Tools</a>
-    <a class="" href="../governance/">Governance</a>
-    <a class="" href="../funding/">Funding</a>
-    <a class="" href="../community/">Community</a>
-    <a class="" href="../blog/">Blog</a>
+    <a href="../playground/">Playground</a>
+    <a href="../tools/">Tools</a>
+    <a href="../governance/">Governance</a>
+    <a href="../funding/">Funding</a>
+    <a href="../community/">Community</a>
+    <a href="../blog/">Blog</a>
   </nav>
 </header>
 
 <section>
   <div class="wrap">
-    <h1 style="font-size:48px">Learn</h1>
-    <p class="lead">러스트 /learn/은 책 · 예시 · 실습 세 갈래입니다. FreeLang도 같은 세 갈래입니다. 수백 쪽 책은 아직 없고, 가이드와 예시와 컴파일러 저장소가 그 자리입니다.</p>
+    <h1 style="font-size:52px">Learn</h1>
+    <p class="lead">러스트 Learn은 책, By Example, Rustlings 세 갈래입니다. FreeLang은 아직 수백 쪽 책이 없습니다. 그 세 칸을 설치 가이드, 예제 10개, 내 기계에서 실행으로 채웁니다.</p>
     <div class="three">
       <article class="card">
-        <h3>가이드</h3>
-        <p>설치부터 첫 실행까지. 러스트 Getting started의 자리입니다.</p>
-        <a href="../install/">Install →</a>
+        <h3>Getting started</h3>
+        <p>컴파일러를 빌드하고 첫 파일을 실행합니다. 러스트 rustup + cargo new의 자리입니다.</p>
+        <a href="../install/">Install 따라가기 →</a>
       </article>
       <article class="card">
-        <h3>예시로 읽기</h3>
-        <p>말은 짧게, 코드가 먼저. 러스트 By Example의 자리입니다.</p>
-        <a href="../playground/">Playground →</a>
+        <h3>By Example</h3>
+        <p>말은 짧게, 코드가 먼저입니다. 변수부터 할 일 목록까지 한 화면짜리 파일 10개입니다.</p>
+        <a href="../playground/">Playground에서 읽기 →</a>
       </article>
       <article class="card">
         <h3>내 환경에서</h3>
-        <p>툴체인을 받아서 터미널에서 돕니다. 러스트 Rustlings의 자리입니다.</p>
-        <a href="https://github.com/kimjindol2025/freelang-v11">freelang-v11 →</a>
+        <p>러스트 Rustlings처럼, 받은 툴체인으로 터미널에서 돕니다. 브라우저가 컴파일하지 않습니다.</p>
+        <a href="https://github.com/kimjindol2025/freelang-ai">예제 저장소 →</a>
       </article>
     </div>
   </div>
 </section>
 <section class="band">
   <div class="wrap">
-    <h2>핵심 문서</h2>
-    <p class="lead">러스트가 std · cargo · rustc · 에러 인덱스를 늘어놓는 칸입니다. FreeLang은 있는 문서만 적습니다.</p>
+    <h2>예제 10개</h2>
+    <p class="lead">각 파일은 FX 컴파일러로 실행을 확인했습니다. 명령은 같습니다: <code>scripts/run.sh examples/이름.fl</code></p>
+    <table><thead><tr><th>파일</th><th>주제</th><th>문법</th></tr></thead><tbody><tr><td><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/01-variables.fl">01-variables.fl</a></td><td>변수</td><td>define, let</td></tr><tr><td><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/02-functions.fl">02-functions.fl</a></td><td>함수</td><td>defn, str</td></tr><tr><td><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/03-conditions.fl">03-conditions.fl</a></td><td>조건</td><td>if, cond</td></tr><tr><td><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/04-loops.fl">04-loops.fl</a></td><td>반복</td><td>loop, recur, 재귀</td></tr><tr><td><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/05-strings.fl">05-strings.fl</a></td><td>문자열</td><td>길이, 자르기, 나누기</td></tr><tr><td><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/06-collections.fl">06-collections.fl</a></td><td>컬렉션</td><td>벡터, 맵</td></tr><tr><td><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/07-higher-order.fl">07-higher-order.fl</a></td><td>고차 함수</td><td>map, filter, reduce</td></tr><tr><td><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/08-errors.fl">08-errors.fl</a></td><td>오류</td><td>try, catch, throw</td></tr><tr><td><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/09-files.fl">09-files.fl</a></td><td>파일</td><td>쓰기, 읽기, 지우기</td></tr><tr><td><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/10-cli-todo.fl">10-cli-todo.fl</a></td><td>작은 프로그램</td><td>할 일 목록</td></tr></tbody></table>
     <div class="docs">
-      <article class="card"><h3>문법</h3><p>S-expression. defn, if, 벡터, 맵.</p><a href="../playground/">예시 →</a></article>
-      <article class="card"><h3>실행 경로</h3><p>앱은 fl-cli.js. 컴파일은 bin/fl. 섞지 마십시오.</p><a href="https://github.com/kimjindol2025/freelang-v11/blob/master/docs/RUNTIME_ENTRYPOINTS.md">RUNTIME_ENTRYPOINTS.md →</a></article>
-      <article class="card"><h3>HTTP</h3><p>http-get / http-post. TLS 없음. IPv4, 타임아웃 5초.</p><a href="https://github.com/kimjindol2025/freelang-v11/blob/master/lib/http/README.md">HTTP v0.1 →</a></article>
-      <article class="card"><h3>파일 · 문자열</h3><p>fs, str, regex 계약이 따로 있습니다.</p><a href="https://github.com/kimjindol2025/freelang-v11/blob/master/README.md">v11 README →</a></article>
-      <article class="card"><h3>AI 규칙</h3><p>암묵 변환 금지, kebab-case, 순수/I/O 분리.</p><a href="https://github.com/kimjindol2025/freelang-v11/blob/master/docs/AI_FRIENDLINESS.md">AI_FRIENDLINESS.md →</a></article>
-      <article class="card"><h3>완료 기록</h3><p>고정점 해시, 시험 41/41, 감사 44/44.</p><a href="https://github.com/kimjindol2025/freelang-v11/blob/master/docs/V11_COMPLETE.md">V11_COMPLETE.md →</a></article>
+      <article class="card"><h3>01-variables.fl</h3><p>01 변수: define으로 이름을 붙이고, let으로 잠깐 쓰는 값을 만듭니다.</p><p>변수 · define, let</p><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/01-variables.fl">소스 →</a></article><article class="card"><h3>02-functions.fl</h3><p>02 함수: defn으로 함수를 만들고 부릅니다.</p><p>함수 · defn, str</p><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/02-functions.fl">소스 →</a></article><article class="card"><h3>03-conditions.fl</h3><p>03 조건: if는 둘 중 하나, cond는 여러 갈래를 고릅니다.</p><p>조건 · if, cond</p><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/03-conditions.fl">소스 →</a></article><article class="card"><h3>04-loops.fl</h3><p>04 반복: loop와 recur로 1부터 10까지 더합니다. 재귀 함수도 함께 봅니다.</p><p>반복 · loop, recur, 재귀</p><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/04-loops.fl">소스 →</a></article><article class="card"><h3>05-strings.fl</h3><p>05 문자열: 이어 붙이기, 길이, 대문자, 자르기, 나누기.</p><p>문자열 · 길이, 자르기, 나누기</p><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/05-strings.fl">소스 →</a></article><article class="card"><h3>06-collections.fl</h3><p>06 벡터와 맵: 여러 값을 묶어 두고 꺼내 씁니다.</p><p>컬렉션 · 벡터, 맵</p><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/06-collections.fl">소스 →</a></article><article class="card"><h3>07-higher-order.fl</h3><p>07 고차 함수: map, filter, reduce로 목록을 한 번에 다룹니다.</p><p>고차 함수 · map, filter, reduce</p><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/07-higher-order.fl">소스 →</a></article><article class="card"><h3>08-errors.fl</h3><p>08 오류 처리: throw로 오류를 던지고 try/catch로 받습니다.</p><p>오류 · try, catch, throw</p><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/08-errors.fl">소스 →</a></article><article class="card"><h3>09-files.fl</h3><p>09 파일: 파일에 쓰고, 다시 읽고, 지웁니다.</p><p>파일 · 쓰기, 읽기, 지우기</p><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/09-files.fl">소스 →</a></article><article class="card"><h3>10-cli-todo.fl</h3><p>10 작은 프로그램: 할 일 목록을 만들고 완료 개수를 셉니다.</p><p>작은 프로그램 · 할 일 목록</p><a href="https://github.com/kimjindol2025/freelang-ai/blob/main/examples/10-cli-todo.fl">소스 →</a></article>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="wrap">
+    <h2>핵심 문서</h2>
+    <p class="lead">러스트가 std · cargo · rustc · 에러 인덱스를 늘어놓는 칸입니다. 아래는 지금 공개된 계약입니다.</p>
+    <div class="docs">
+      <article class="card"><h3>설치·실행 스크립트</h3><p><code>scripts/install.sh</code>와 <code>scripts/run.sh</code>. 컴파일러 pin, gcc 플래그, 출력 위치가 파일에 있습니다.</p>
+        <a href="https://github.com/kimjindol2025/freelang-ai/blob/main/scripts/install.sh">install.sh →</a></article>
+      <article class="card"><h3>자체 컴파일 증명</h3><p>stage0 → stage1 → stage2. 해시가 같음을 스크립트가 검사합니다.</p>
+        <a href="https://github.com/kimjindol2025/freelang-v11-fx">freelang-v11-fx →</a></article>
+      <article class="card"><h3>HTTP v0.1</h3><p>http-get / http-post. HTTPS 없음. 타임아웃과 바이트 한도가 계약입니다.</p>
+        <a href="https://github.com/kimjindol2025/freelang-v11/blob/master/lib/http/README.md">lib/http →</a></article>
+      <article class="card"><h3>문자열 · 파일 · 시험</h3><p>str, regex, fs, test, evidence 계약이 v11에 있습니다.</p>
+        <a href="https://github.com/kimjindol2025/freelang-v11/blob/master/README.md">v11 README →</a></article>
+      <article class="card"><h3>AI 규칙</h3><p>암묵 변환 없음, kebab-case, 순수와 I/O 분리.</p>
+        <a href="https://github.com/kimjindol2025/freelang-v11/blob/master/docs/AI_FRIENDLINESS.md">AI_FRIENDLINESS.md →</a></article>
+      <article class="card"><h3>완료 기록</h3><p>고정점 이력, 시험 41/41, 감사 44/44.</p>
+        <a href="https://github.com/kimjindol2025/freelang-v11/blob/master/docs/V11_COMPLETE.md">V11_COMPLETE.md →</a></article>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    <div><strong>FreeLang</strong>사람이 읽고, 모델이 쓰는 Lisp.</div>
+    <div><strong>FreeLang</strong>사람이 읽고, 모델이 쓰는 Lisp. 컴파일러가 자기 자신을 다시 컴파일합니다.</div>
     <div><strong>시작</strong>
       <a href="../install/">Install</a>
       <a href="../learn/">Learn</a>
@@ -80,8 +96,9 @@
       <a href="../blog/">Blog</a>
     </div>
     <div><strong>코드</strong>
-      <a href="https://github.com/kimjindol2025/freelang-v11">freelang-v11</a>
       <a href="https://github.com/kimjindol2025/freelang-ai">freelang-ai</a>
+      <a href="https://github.com/kimjindol2025/freelang-v11-fx">freelang-v11-fx</a>
+      <a href="https://github.com/kimjindol2025/freelang-v11">freelang-v11</a>
     </div>
   </div>
 </footer>

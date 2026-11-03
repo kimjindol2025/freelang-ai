@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FreeLang · Tools</title>
-<meta name="description" content="사람이 읽고, 모델이 쓰는 Lisp. 네이티브 컴파일러와 런타임.">
+<meta name="description" content="사람이 읽고, 모델이 쓰는 Lisp. 네이티브 컴파일러가 자기 자신을 컴파일합니다.">
 <link rel="icon" href="../mark.svg">
 <link rel="stylesheet" href="../site.css">
 </head>
@@ -15,36 +15,92 @@
     FreeLang
   </a>
   <nav>
-    <a class="" href="../install/">Install</a>
-    <a class="" href="../learn/">Learn</a>
-    <a class="" href="../playground/">Playground</a>
+        <a href="../install/">Install</a>
+    <a href="../learn/">Learn</a>
+    <a href="../playground/">Playground</a>
     <a class="on" href="../tools/">Tools</a>
-    <a class="" href="../governance/">Governance</a>
-    <a class="" href="../funding/">Funding</a>
-    <a class="" href="../community/">Community</a>
-    <a class="" href="../blog/">Blog</a>
+    <a href="../governance/">Governance</a>
+    <a href="../funding/">Funding</a>
+    <a href="../community/">Community</a>
+    <a href="../blog/">Blog</a>
   </nav>
 </header>
 
 <section>
   <div class="wrap prose">
-    <h1 style="font-size:48px">Tools</h1>
-    <p class="lead">러스트 Tools는 에디터, Cargo, rustfmt, Clippy, cargo doc입니다. FreeLang은 그 묶음이 없습니다. 있는 도구만 적습니다.</p>
-    <h2>실행기</h2>
-    <p><code>node scripts/fl-cli.js</code> — 작업 디렉터리를 유지한 채 run, serve, repl, compile만 받습니다. HTTP·DB 앱은 이 경로입니다.</p>
-    <h2>컴파일러</h2>
-    <p><code>bin/fl</code> — 네이티브 컴파일러. 앱 실행에 쓰지 않습니다.</p>
-    <h2>시험</h2>
-    <p>컴파일러 저장소의 시험 41/41, 감사 44/44. 러스트의 <code>cargo test</code>에 해당하는 통합 명령은 이 홍보 사이트에 없습니다. 저장소 README를 따릅니다.</p>
-    <h2>없는 것</h2>
-    <p>패키지 레지스트리(crates.io), 포맷터, 린터, 언어 서버, 에디터 공식 플러그인은 아직 이 사이트의 범위가 아닙니다.</p>
-    <a class="btn" href="https://github.com/kimjindol2025/freelang-v11">컴파일러 저장소</a>
+    <h1 style="font-size:52px">Tools</h1>
+    <p class="lead">러스트 Tools는 에디터 통합, Cargo, rustfmt, Clippy, cargo doc입니다. FreeLang이 지금 제공하는 도구는 설치 스크립트, 실행 스크립트, 네이티브 컴파일러 <code>flc</code>, 그리고 gcc입니다.</p>
+
+    <h2>install.sh</h2>
+    <p>컴파일러를 받아 세 단계로 빌드하고, 자기 자신을 다시 컴파일해 결과가 같은지 검사합니다. node와 sudo를 호출하지 않습니다.</p>
+    <div class="panel"><div class="cap">scripts/install.sh</div>
+<pre>#!/usr/bin/env bash
+# install.sh — FreeLang FX 컴파일러를 받아서 직접 빌드합니다. (node·sudo 필요 없음)
+# 필요: git, gcc, 그리고 libsqlite3 / libssl / libcurl 개발 헤더
+# 사용법: scripts/install.sh            (기본 위치: ~/.freelang)
+set -Eeuo pipefail
+FL_HOME=&quot;${FL_HOME:-$HOME/.freelang}&quot;
+REPO=&quot;https://github.com/kimjindol2025/freelang-v11-fx&quot;
+PIN=&quot;${FL_PIN:-1d217f53a8aade8a288c0dcad0a1ba23b610f102}&quot;   # 2026-11-03 자체 컴파일 검증을 한 커밋
+FX=&quot;$FL_HOME/freelang-v11-fx&quot;
+mkdir -p &quot;$FL_HOME/bin&quot;
+if [[ ! -d &quot;$FX/.git&quot; ]]; then git clone &quot;$REPO&quot; &quot;$FX&quot;; fi
+git -C &quot;$FX&quot; fetch -q origin
+git -C &quot;$FX&quot; checkout -q &quot;$PIN&quot;
+R=&quot;$FX/runtime&quot;
+ALL=&quot;core collection io math error process json aliases user-fns cgc-bridge gc http websocket sqlite mariadb debug http_client regex smtp sse&quot;
+APP=&quot;core collection io math error process json aliases user-fns gc http websocket sqlite mariadb debug http_client regex smtp sse&quot;
+for f in $APP; do printf &#x27;%s &#x27; &quot;$R/$f.c&quot;; done &gt; &quot;$FL_HOME/app-srcs&quot;
+: &quot;${FL_CFLAGS:=}&quot;; printf &#x27;%s&#x27; &quot;$FL_CFLAGS&quot; &gt; &quot;$FL_HOME/cflags&quot;
+: &quot;${FL_LDFLAGS:=-lm -lpthread -ldl -lsqlite3 -lssl -lcrypto -lcurl}&quot;; printf &#x27;%s&#x27; &quot;$FL_LDFLAGS&quot; &gt; &quot;$FL_HOME/ldflags&quot;
+SRCS=&quot;&quot;; for f in $ALL; do SRCS=&quot;$SRCS $R/$f.c&quot;; done
+echo &quot;[1/3] stage0 빌드&quot;
+gcc -O2 -w -I &quot;$R&quot; $FL_CFLAGS -o &quot;$FL_HOME/bin/stage0&quot; &quot;$FX/bootstrap/stage0.c&quot; $SRCS $FL_LDFLAGS
+echo &quot;[2/3] stage0 → stage1 (컴파일러가 자기 소스를 컴파일)&quot;
+&quot;$FL_HOME/bin/stage0&quot; &quot;$FX/self/cgc-main.fl&quot; &quot;$FL_HOME/stage1.c&quot; &gt;/dev/null 2&gt;&amp;1
+gcc -O2 -w -I &quot;$R&quot; $FL_CFLAGS -o &quot;$FL_HOME/bin/flc&quot; &quot;$FL_HOME/stage1.c&quot; $SRCS $FL_LDFLAGS
+echo &quot;[3/3] 확인&quot;
+&quot;$FL_HOME/bin/flc&quot; &quot;$FX/self/cgc-main.fl&quot; &quot;$FL_HOME/stage2.c&quot; &gt;/dev/null 2&gt;&amp;1
+if cmp -s &quot;$FL_HOME/stage1.c&quot; &quot;$FL_HOME/stage2.c&quot;; then echo &quot;stage1 == stage2  같음&quot;; else echo &quot;stage1 != stage2  다름&quot; &gt;&amp;2; exit 1; fi
+sha256sum &quot;$FL_HOME/stage1.c&quot; &quot;$FL_HOME/stage2.c&quot;
+echo &quot;완료: $FL_HOME/bin/flc&quot;
+</pre></div>
+
+    <h2>run.sh</h2>
+    <p>러스트 <code>cargo run</code>의 자리입니다. <code>.fl</code> → C → gcc → 실행. 임시 디렉터리에서 빌드하고 지웁니다.</p>
+    <div class="panel"><div class="cap">scripts/run.sh</div>
+<pre>#!/usr/bin/env bash
+# run.sh — FreeLang 파일 하나를 C로 바꾸고, 빌드하고, 실행합니다.
+# 사용법: scripts/run.sh examples/01-variables.fl
+# 먼저 scripts/install.sh 로 컴파일러를 준비하세요.
+set -Eeuo pipefail
+SRC=&quot;${1:?사용법: scripts/run.sh &lt;파일.fl&gt;}&quot;
+FL_HOME=&quot;${FL_HOME:-$HOME/.freelang}&quot;
+FX=&quot;$FL_HOME/freelang-v11-fx&quot;
+FLC=&quot;$FL_HOME/bin/flc&quot;
+[[ -x &quot;$FLC&quot; ]] || { echo &quot;컴파일러가 없어요. 먼저 scripts/install.sh 를 실행하세요.&quot; &gt;&amp;2; exit 1; }
+WORK=&quot;$(mktemp -d &quot;${TMPDIR:-/tmp}/fl-run.XXXXXX&quot;)&quot;
+trap &#x27;rm -rf -- &quot;$WORK&quot;&#x27; EXIT
+&quot;$FLC&quot; &quot;$SRC&quot; &quot;$WORK/out.c&quot; &gt;/dev/null
+gcc -O2 -w -I &quot;$FX/runtime&quot; $(cat &quot;$FL_HOME/cflags&quot;) -o &quot;$WORK/app&quot; &quot;$WORK/out.c&quot; \
+  $(cat &quot;$FL_HOME/app-srcs&quot;) $(cat &quot;$FL_HOME/ldflags&quot;)
+&quot;$WORK/app&quot;
+</pre></div>
+
+    <h2>flc</h2>
+    <p>설치 후 경로는 <code>~/.freelang/bin/flc</code>입니다. FreeLang 소스를 C로 바꿉니다. 이 바이너리 자체가 FreeLang으로 컴파일된 컴파일러입니다.</p>
+
+    <h2>검증</h2>
+    <p>저장소 <a href="https://github.com/kimjindol2025/freelang-v11-fx">freelang-v11-fx</a>의 <code>./scripts/verify-native-bootstrap.sh</code>는 stage1·2·3 해시가 같은지 다시 봅니다. strace가 필요합니다.</p>
+
+    <h2>에디터 · 포맷터 · 린터</h2>
+    <p>공식 rust-analyzer / rustfmt / Clippy에 해당하는 배포물은 아직 이 사이트의 도구 목록에 없습니다. 문법 강조는 에디터의 Lisp 모드로 읽는 경우가 많습니다. 생기면 이 페이지에 적습니다.</p>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    <div><strong>FreeLang</strong>사람이 읽고, 모델이 쓰는 Lisp.</div>
+    <div><strong>FreeLang</strong>사람이 읽고, 모델이 쓰는 Lisp. 컴파일러가 자기 자신을 다시 컴파일합니다.</div>
     <div><strong>시작</strong>
       <a href="../install/">Install</a>
       <a href="../learn/">Learn</a>
@@ -58,8 +114,9 @@
       <a href="../blog/">Blog</a>
     </div>
     <div><strong>코드</strong>
-      <a href="https://github.com/kimjindol2025/freelang-v11">freelang-v11</a>
       <a href="https://github.com/kimjindol2025/freelang-ai">freelang-ai</a>
+      <a href="https://github.com/kimjindol2025/freelang-v11-fx">freelang-v11-fx</a>
+      <a href="https://github.com/kimjindol2025/freelang-v11">freelang-v11</a>
     </div>
   </div>
 </footer>

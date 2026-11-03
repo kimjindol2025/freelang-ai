@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FreeLang · Playground</title>
-<meta name="description" content="사람이 읽고, 모델이 쓰는 Lisp. 네이티브 컴파일러와 런타임.">
+<meta name="description" content="사람이 읽고, 모델이 쓰는 Lisp. 네이티브 컴파일러가 자기 자신을 컴파일합니다.">
 <link rel="icon" href="../mark.svg">
 <link rel="stylesheet" href="../site.css">
 </head>
@@ -15,58 +15,68 @@
     FreeLang
   </a>
   <nav>
-    <a class="" href="../install/">Install</a>
-    <a class="" href="../learn/">Learn</a>
+        <a href="../install/">Install</a>
+    <a href="../learn/">Learn</a>
     <a class="on" href="../playground/">Playground</a>
-    <a class="" href="../tools/">Tools</a>
-    <a class="" href="../governance/">Governance</a>
-    <a class="" href="../funding/">Funding</a>
-    <a class="" href="../community/">Community</a>
-    <a class="" href="../blog/">Blog</a>
+    <a href="../tools/">Tools</a>
+    <a href="../governance/">Governance</a>
+    <a href="../funding/">Funding</a>
+    <a href="../community/">Community</a>
+    <a href="../blog/">Blog</a>
   </nav>
 </header>
 
 <section>
   <div class="wrap">
-    <h1 style="font-size:48px">Playground</h1>
-    <p class="lead">러스트 Playground는 브라우저에서 rustc가 돕니다. FreeLang은 브라우저 컴파일러가 없습니다. 여기서는 예시를 읽고, 실행은 Install의 CLI로 합니다.</p>
+    <h1 style="font-size:52px">Playground</h1>
+    <p class="lead">러스트 Playground는 브라우저에서 rustc가 돕니다. FreeLang은 브라우저에 컴파일러를 올리지 않았습니다. 이 페이지는 Rust By Example처럼 코드를 보여 주고, 실행 명령만 적습니다. 돌리려면 <a href="../install/">Install</a>이 필요합니다.</p>
     <div class="tabs" id="tabs">
-      <button class="on" data-k="hello">hello.fl</button>
-      <button data-k="fact">factorial.fl</button>
-      <button data-k="coll">collections.fl</button>
+      <button class="on" data-k="01-variables.fl">01-variables.fl</button><button class="" data-k="02-functions.fl">02-functions.fl</button><button class="" data-k="03-conditions.fl">03-conditions.fl</button><button class="" data-k="04-loops.fl">04-loops.fl</button><button class="" data-k="05-strings.fl">05-strings.fl</button><button class="" data-k="06-collections.fl">06-collections.fl</button><button class="" data-k="07-higher-order.fl">07-higher-order.fl</button><button class="" data-k="08-errors.fl">08-errors.fl</button><button class="" data-k="09-files.fl">09-files.fl</button><button class="" data-k="10-cli-todo.fl">10-cli-todo.fl</button>
     </div>
-    <div class="panel"><div class="cap" id="cap">hello.fl</div>
-      <pre id="code"></pre>
+    <p id="meta" class="lead">01-variables.fl · 변수 · define, let</p>
+    <div class="panel"><div class="cap" id="cap">examples/01-variables.fl</div>
+      <pre id="code">;; 01 변수: define으로 이름을 붙이고, let으로 잠깐 쓰는 값을 만듭니다.
+(define name &quot;FreeLang&quot;)
+(define year 2026)
+(println name)
+(println year)
+(let [$a 10 $b 32]
+  (println (+ $a $b)))
+</pre>
     </div>
-    <p class="lead" style="margin-top:20px">실행:</p>
+    <h2>이 파일을 실행</h2>
     <div class="panel"><div class="cap">terminal</div>
-<pre>cd freelang-v11
-node scripts/fl-cli.js run examples/hello.fl</pre></div>
+<pre id="cmd">scripts/run.sh examples/01-variables.fl</pre></div>
+    <p>컴파일러가 없으면 먼저:</p>
+    <div class="panel"><div class="cap">terminal</div>
+<pre>git clone https://github.com/kimjindol2025/freelang-ai
+cd freelang-ai
+scripts/install.sh</pre></div>
   </div>
 </section>
 <script>
-const SRC = {
-  hello: '(println "Hello from FL!")\n(println (+ 1 2 3))\n',
-  fact: '(defn factorial [n]\n  (if (<= n 1)\n    1\n    (* n (factorial (- n 1)))))\n\n(println "factorial(5) = ")\n(println (factorial 5))\n',
-  coll: '(define nums [1 2 3 4])\n(println (vec-len nums))\n(println (vec-get nums 0))\n\n(define person {"name" "Kim" "lang" "FreeLang"})\n(println (map-get person "name"))\n'
-};
-const NAME = {hello:"hello.fl", fact:"factorial.fl", coll:"collections.fl"};
+const SRC = {'01-variables.fl': ';; 01 변수: define으로 이름을 붙이고, let으로 잠깐 쓰는 값을 만듭니다.\n(define name "FreeLang")\n(define year 2026)\n(println name)\n(println year)\n(let [$a 10 $b 32]\n  (println (+ $a $b)))\n','02-functions.fl': ';; 02 함수: defn으로 함수를 만들고 부릅니다.\n(defn square [$n] (* $n $n))\n(defn greet [$who] (str "안녕하세요, " $who "!"))\n(println (square 7))\n(println (greet "FreeLang"))\n','03-conditions.fl': ';; 03 조건: if는 둘 중 하나, cond는 여러 갈래를 고릅니다.\n(defn sign [$n]\n  (cond\n    (< $n 0) "음수"\n    (= $n 0) "영"\n    true     "양수"))\n(println (if (> 3 2) "크다" "작다"))\n(println (sign -5))\n(println (sign 0))\n(println (sign 9))\n','04-loops.fl': ';; 04 반복: loop와 recur로 1부터 10까지 더합니다. 재귀 함수도 함께 봅니다.\n(defn sum-to [$n]\n  (loop [$i 1 $acc 0]\n    (if (> $i $n)\n      $acc\n      (recur (+ $i 1) (+ $acc $i)))))\n(defn fib [$n]\n  (if (< $n 2) $n (+ (fib (- $n 1)) (fib (- $n 2)))))\n(println (sum-to 10))\n(println (fib 20))\n','05-strings.fl': ';; 05 문자열: 이어 붙이기, 길이, 대문자, 자르기, 나누기.\n(define s "hello freelang")\n(println (str s " !"))\n(println (str-length s))\n(println (str-to-upper s))\n(println (str-slice s 0 5))\n(println (str-includes s "free"))\n(println (str-split "a,b,c" ","))\n','06-collections.fl': ';; 06 벡터와 맵: 여러 값을 묶어 두고 꺼내 씁니다.\n(define nums [10 20 30])\n(println (length nums))\n(println (nth nums 1))\n(println (first nums))\n(define user {"name" "Kim" "lang" "FreeLang"})\n(println (get user "name"))\n(println (get (assoc user "lang" "FL") "lang"))\n','07-higher-order.fl': ';; 07 고차 함수: map, filter, reduce로 목록을 한 번에 다룹니다.\n(define nums [1 2 3 4 5 6])\n(println (map (fn [$x] (* $x $x)) nums))\n(println (filter (fn [$x] (= (% $x 2) 0)) nums))\n(println (reduce (fn [$acc $x] (+ $acc $x)) 0 nums))\n','08-errors.fl': ';; 08 오류 처리: throw로 오류를 던지고 try/catch로 받습니다.\n(defn safe-div [$a $b]\n  (if (= $b 0) (throw "0으로 나눌 수 없어요") (/ $a $b)))\n(println (try (safe-div 10 2) (catch $e (str "오류: " $e))))\n(println (try (safe-div 1 0) (catch $e (str "오류: " $e))))\n','09-files.fl': ';; 09 파일: 파일에 쓰고, 다시 읽고, 지웁니다.\n(define path "/tmp/freelang-example.txt")\n(file-write path "FreeLang이 쓴 파일입니다")\n(println (file-exists? path))\n(println (file-read path))\n(file-delete path)\n(println (file-exists? path))\n','10-cli-todo.fl': ';; 10 작은 프로그램: 할 일 목록을 만들고 완료 개수를 셉니다.\n(define todos [{"title" "언어 배우기" "done" true}\n               {"title" "예제 돌리기" "done" true}\n               {"title" "내 프로그램 만들기" "done" false}])\n(defn show [$t]\n  (println (str (if (get $t "done") "[x] " "[ ] ") (get $t "title"))))\n(map show todos)\n(define done (length (filter (fn [$t] (get $t "done")) todos)))\n(println (str "완료 " done " / " (length todos)))\n'};
+const META = {'01-variables.fl': '변수' + " · " + 'define, let', '02-functions.fl': '함수' + " · " + 'defn, str', '03-conditions.fl': '조건' + " · " + 'if, cond', '04-loops.fl': '반복' + " · " + 'loop, recur, 재귀', '05-strings.fl': '문자열' + " · " + '길이, 자르기, 나누기', '06-collections.fl': '컬렉션' + " · " + '벡터, 맵', '07-higher-order.fl': '고차 함수' + " · " + 'map, filter, reduce', '08-errors.fl': '오류' + " · " + 'try, catch, throw', '09-files.fl': '파일' + " · " + '쓰기, 읽기, 지우기', '10-cli-todo.fl': '작은 프로그램' + " · " + '할 일 목록'};
+const tabs = document.getElementById("tabs");
 const code = document.getElementById("code");
 const cap = document.getElementById("cap");
-code.textContent = SRC.hello;
-document.getElementById("tabs").addEventListener("click", (e) => {
+const cmd = document.getElementById("cmd");
+const meta = document.getElementById("meta");
+tabs.addEventListener("click", (e) => {
   const b = e.target.closest("button");
   if (!b) return;
-  document.querySelectorAll("#tabs button").forEach(x => x.classList.toggle("on", x===b));
+  tabs.querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b));
   const k = b.dataset.k;
-  cap.textContent = NAME[k];
   code.textContent = SRC[k];
+  cap.textContent = "examples/" + k;
+  cmd.textContent = "scripts/run.sh examples/" + k;
+  meta.textContent = k + " · " + META[k];
 });
 </script>
 
 <footer>
   <div class="wrap">
-    <div><strong>FreeLang</strong>사람이 읽고, 모델이 쓰는 Lisp.</div>
+    <div><strong>FreeLang</strong>사람이 읽고, 모델이 쓰는 Lisp. 컴파일러가 자기 자신을 다시 컴파일합니다.</div>
     <div><strong>시작</strong>
       <a href="../install/">Install</a>
       <a href="../learn/">Learn</a>
@@ -80,8 +90,9 @@ document.getElementById("tabs").addEventListener("click", (e) => {
       <a href="../blog/">Blog</a>
     </div>
     <div><strong>코드</strong>
-      <a href="https://github.com/kimjindol2025/freelang-v11">freelang-v11</a>
       <a href="https://github.com/kimjindol2025/freelang-ai">freelang-ai</a>
+      <a href="https://github.com/kimjindol2025/freelang-v11-fx">freelang-v11-fx</a>
+      <a href="https://github.com/kimjindol2025/freelang-v11">freelang-v11</a>
     </div>
   </div>
 </footer>

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FreeLang</title>
-<meta name="description" content="사람이 읽고, 모델이 쓰는 Lisp. 네이티브 컴파일러와 런타임.">
+<meta name="description" content="사람이 읽고, 모델이 쓰는 Lisp. 네이티브 컴파일러가 자기 자신을 컴파일합니다.">
 <link rel="icon" href="mark.svg">
 <link rel="stylesheet" href="site.css">
 </head>
@@ -15,70 +15,91 @@
     FreeLang
   </a>
   <nav>
-    <a class="" href="install/">Install</a>
-    <a class="" href="learn/">Learn</a>
-    <a class="" href="playground/">Playground</a>
-    <a class="" href="tools/">Tools</a>
-    <a class="" href="governance/">Governance</a>
-    <a class="" href="funding/">Funding</a>
-    <a class="" href="community/">Community</a>
-    <a class="" href="blog/">Blog</a>
+        <a href="install/">Install</a>
+    <a href="learn/">Learn</a>
+    <a href="playground/">Playground</a>
+    <a href="tools/">Tools</a>
+    <a href="governance/">Governance</a>
+    <a href="funding/">Funding</a>
+    <a href="community/">Community</a>
+    <a href="blog/">Blog</a>
   </nav>
 </header>
 
 <div class="hero">
   <div>
     <h1>FreeLang</h1>
-    <p class="tag">사람이 읽고, 모델이 쓰는 Lisp. 네이티브 컴파일러가 그 코드를 실행합니다.</p>
+    <p class="tag">사람이 읽고, 모델이 쓰는 Lisp. 컴파일러가 FreeLang으로 쓰여 있고, 자기 자신을 다시 컴파일한 결과가 한 글자도 다르지 않습니다. Node는 쓰지 않습니다.</p>
     <div class="row">
       <a class="btn" href="install/">Install</a>
       <a class="btn ghost" href="learn/">Learn</a>
     </div>
   </div>
-  <pre><span class="tok">(defn</span> greet [name]
-  (str "Hello, " name "!"))
-
-<span class="tok">(println</span> (greet "FreeLang"))</pre>
+  <pre>(define name "FreeLang")
+(defn greet [$who]
+  (str "Hello, " $who "!"))
+(println (greet name))</pre>
 </div>
-<section id="why" class="band">
+<section class="band">
   <div class="wrap">
     <h2>왜 FreeLang인가</h2>
-    <p class="lead">러스트 홈이 성능·신뢰·생산성을 말하는 자리입니다. FreeLang은 Lisp, 네이티브 컴파일러, 모델이 깨지지 않는 문법을 말합니다.</p>
+    <p class="lead">러스트 홈이 성능·신뢰·생산성을 한 칸씩 채우듯, 여기서는 언어가 실제로 보장하는 세 가지를 적습니다.</p>
     <div class="three">
-      <div><h3>Lisp</h3><p>S-expression. 코드가 데이터입니다. 생성하고 검사하고 바꾸는 길이 하나입니다.</p></div>
-      <div><h3>네이티브 컴파일러</h3><p>v11 기준. stage 2·3·4 고정점, 시험 41/41, 감사 44/44. 실행 경로에 Node와 JS가 없습니다.</p></div>
-      <div><h3>모델이 깨지 않게</h3><p>암묵 변환 없음. 순수와 I/O를 나눕니다. kebab-case 하나. 같은 입력이면 같은 출력입니다.</p></div>
+      <div>
+        <h3>Lisp</h3>
+        <p>코드가 데이터입니다. <code>define</code>, <code>defn</code>, <code>if</code>, <code>loop</code>/<code>recur</code>, 벡터와 맵이 같은 괄호 문법입니다. 생성하고 검사하는 길이 하나입니다.</p>
+      </div>
+      <div>
+        <h3>자기 자신을 컴파일</h3>
+        <p><code>bootstrap/stage0.c</code>에서 시작해 stage1·2·3이 동일합니다. 검증 커밋에서 SHA-256이 세 번 같습니다. 실행 경로에 Node·JS가 없습니다.</p>
+      </div>
+      <div>
+        <h3>바로 도는 예제</h3>
+        <p>변수부터 파일·할 일 목록까지 10개 예제를 FX 컴파일러로 돌려 확인했습니다. 설치는 <code>scripts/install.sh</code>, 실행은 <code>scripts/run.sh</code>입니다.</p>
+      </div>
     </div>
   </div>
 </section>
 <section>
   <div class="wrap">
     <h2>이 언어로 하는 일</h2>
-    <p class="lead">문자열, 정규식, 파일, 시간, 시험, HTTP, DB. HTTP는 v0.1, HTTPS는 없습니다.</p>
+    <p class="lead">러스트가 CLI·Wasm·네트워킹·임베디드로 나눈 칸입니다. FreeLang은 지금 저장소에서 도는 일로 나눕니다.</p>
     <div class="four">
-      <article class="card"><h3>함수</h3><p>defn, 조건, 재귀.</p><a href="learn/">Learn →</a></article>
-      <article class="card"><h3>컬렉션</h3><p>벡터 []와 맵 {}.</p><a href="playground/">Playground →</a></article>
-      <article class="card"><h3>HTTP · DB</h3><p>클라이언트 HTTP와 DB 런타임. 네이티브 REPL/서버는 아직 없습니다.</p><a href="tools/">Tools →</a></article>
-      <article class="card"><h3>컴파일러</h3><p>구현은 freelang-v11. 이 사이트는 앞문입니다.</p><a href="https://github.com/kimjindol2025/freelang-v11">저장소 →</a></article>
+      <article class="card"><h3>값과 함수</h3><p>이름 붙이기, 함수, 조건, 재귀.</p><a href="learn/">01–04 →</a></article>
+      <article class="card"><h3>데이터</h3><p>문자열, 벡터, 맵, map/filter/reduce.</p><a href="learn/">05–07 →</a></article>
+      <article class="card"><h3>프로그램</h3><p>오류 처리, 파일, 작은 CLI 할 일 목록.</p><a href="learn/">08–10 →</a></article>
+      <article class="card"><h3>컴파일러</h3><p>gcc로 C를 만들고 실행합니다. 브라우저 컴파일러는 없습니다.</p><a href="tools/">Tools →</a></article>
     </div>
   </div>
 </section>
 <section class="band">
   <div class="wrap">
-    <h2>확인된 것</h2>
-    <div class="facts">
-      <span>stage 2 = 3 = 4</span>
-      <span>시험 41/41</span>
-      <span>감사 44/44</span>
-      <span>실행 경로 Node 0 · JS 0</span>
-      <span>HTTP v0.1 · HTTPS 없음</span>
+    <h2>확인된 고정점</h2>
+    <p class="lead">회사 로고가 아니라, 컴파일러가 자기 소스를 다시 컴파일한 해시입니다. 직접 재현할 수 있습니다.</p>
+    <div class="panel"><div class="cap">stage1.c == stage2.c == stage3.c</div>
+<pre>aa8bed315d2bae91630fcff72d7edcafb9afafd84dc357133bb271c3d1bda4fd</pre></div>
+    <p class="lead" style="margin-top:16px">재현: <code>git clone https://github.com/kimjindol2025/freelang-v11-fx && ./scripts/verify-native-bootstrap.sh</code></p>
+  </div>
+</section>
+<section>
+  <div class="wrap">
+    <h2>시작하기</h2>
+    <p class="lead">러스트의 rustup 자리입니다. git과 gcc가 있으면 됩니다. sudo·node는 필요 없습니다.</p>
+    <div class="panel"><div class="cap">terminal</div>
+<pre>git clone https://github.com/kimjindol2025/freelang-ai
+cd freelang-ai
+scripts/install.sh
+scripts/run.sh examples/01-variables.fl</pre></div>
+    <div class="row">
+      <a class="btn" href="install/">설치 절차 보기</a>
+      <a class="btn ghost" href="playground/">예제 읽기</a>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    <div><strong>FreeLang</strong>사람이 읽고, 모델이 쓰는 Lisp.</div>
+    <div><strong>FreeLang</strong>사람이 읽고, 모델이 쓰는 Lisp. 컴파일러가 자기 자신을 다시 컴파일합니다.</div>
     <div><strong>시작</strong>
       <a href="install/">Install</a>
       <a href="learn/">Learn</a>
@@ -92,8 +113,9 @@
       <a href="blog/">Blog</a>
     </div>
     <div><strong>코드</strong>
-      <a href="https://github.com/kimjindol2025/freelang-v11">freelang-v11</a>
       <a href="https://github.com/kimjindol2025/freelang-ai">freelang-ai</a>
+      <a href="https://github.com/kimjindol2025/freelang-v11-fx">freelang-v11-fx</a>
+      <a href="https://github.com/kimjindol2025/freelang-v11">freelang-v11</a>
     </div>
   </div>
 </footer>
